@@ -1,1 +1,1 @@
-//= require symphonia/application
+// require symphonia/application

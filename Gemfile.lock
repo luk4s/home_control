@@ -53,6 +53,8 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_record-pgcrypto (0.2.6)
+      activerecord (>= 3.2)
     activejob (6.1.4.1)
       activesupport (= 6.1.4.1)
       globalid (>= 0.3.6)
@@ -76,7 +78,7 @@ GEM
       zeitwerk (~> 2.3)
     api-pagination (4.7.2)
     ast (2.4.2)
-    atrea_control (1.0.0)
+    atrea_control (1.1.0)
       selenium-webdriver (~> 3.142)
     authlogic (6.4.1)
       activemodel (>= 5.2, < 6.2)
@@ -351,6 +353,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  active_record-pgcrypto (~> 0.2.6)
   atrea_control (~> 1.0)
   bootsnap (>= 1.4.4)
   jbuilder (~> 2.7)

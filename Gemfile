@@ -49,3 +49,5 @@ gem 'symphonia', '~> 4.0'
 source "https://gems.luk4s.cz" do
   gem 'symphonia_spec', group: %i[development test]
 end
+
+gem "active_record-pgcrypto", "~> 0.2.6"

@@ -1,0 +1,42 @@
+<% if current_user.home %>
+  <div data-controller="dashboard" data-dashboard-url-value="<%= home_path(format: "json") %>">
+    <div class="text-center" data-dashboard-target="loading">
+      <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
+      <span class="">Connecting...</span>
+    </div>
+    <div data-dashboard-target="cards" style="display: none">
+      <div class="card mb-2">
+        <div class="card-header">
+          Rekuperace
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Aktuální výkon</h5>
+          <h6 data-dashboard-target="currentMode" class="card-subtitle mb-2 text-muted"></h6>
+          <div class="progress">
+            <div data-dashboard-target="currentPowerProgressBar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          Teplota
+        </div>
+        <div class="card-body">
+          <dl class="row">
+            <dt class="col-sm-3">Venku 🌳</dt>
+            <dd class="col-sm-9" data-dashboard-target="outdoorTemperature"></dd>
+
+            <dt class="col-sm-3">Uvnitř 🏠</dt>
+            <dd class="col-sm-9" data-dashboard-target="indoorTemperature"></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+  </div>
+<% else %>
+  <div class="jumbotron">
+    <h1 class="display-4">There is no home!</h1>
+  </div>
+<% end %>
