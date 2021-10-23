@@ -1,5 +1,5 @@
 class HomesController < ApplicationController
-  before_action :require_login
+  before_action :login_require
 
   def new
     @home = current_user.build_home
@@ -18,6 +18,8 @@ class HomesController < ApplicationController
 
   def show
     @home = current_user.home
+    return redirect_to new_home_path unless @home
+
     respond_to do |format|
       format.html
       format.json { render json: @home&.duplex }
