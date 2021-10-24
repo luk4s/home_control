@@ -7,7 +7,7 @@ ENV RAILS_ROOT /app
 ENV RAILS_ENV "production"
 # Installation of dependencies
 RUN apt-get update -qq \
-  && apt-get install -y vim nodejs \
+  && apt-get install -y vim curl nodejs firefox-esr \
 # Needed for certain gems
     build-essential \
 # Needed for postgres gem
@@ -35,6 +35,8 @@ RUN bundle config set deployment 'true' && \
     bundle install --jobs $(nproc) --retry 5
 # Copy over our application code
 COPY . .
+RUN ln -s $RAILS_ROOT/bin/geckodriver /usr/local/bin/
+
 EXPOSE 3000/tcp
 ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["start"]

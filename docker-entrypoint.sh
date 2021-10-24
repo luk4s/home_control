@@ -2,10 +2,10 @@
 set -e
 
 install() {
-    bundle exec rails db:setup RAILS_ENV=production
+  bundle exec rails db:migrate RAILS_ENV=production
 }
 server() {
-    bundle exec puma -e "${RAILS_ENV}" -p 3000 -b 0.0.0.0
+  bundle exec puma -e "${RAILS_ENV}" -p 3000
 }
 case "$1" in
   "install")

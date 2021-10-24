@@ -2,5 +2,6 @@
 .git
 logs/*
 tmp/*
+!/tmp/pids
 coverage
 .env

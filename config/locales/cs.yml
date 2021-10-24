@@ -1,5 +1,6 @@
 cs:
-  heading_new_home: "Nová domácnost"
+  meta_title: Home Control
+  heading_new_home: Nová domácnost
   atrea:
-    login: "Login"
-  legend_atrea: "Rekuperace"
+    login: Login
+  legend_atrea: Rekuperace
