@@ -14,6 +14,7 @@ services:
   app:
     build: ./source/
     image: my_home_control
+    restart: on-failure
     volumes:
       - gem_cache:/usr/local/bundle/gems
       - app_logs:/app/log
@@ -22,7 +23,7 @@ services:
       - 3000:3000
     env_file: .env
     environment:
-#      RAILS_SERVE_STATIC_FILES: 1
+      RAILS_SERVE_STATIC_FILES: 1
       REDIS_URL: redis
       DATABASE_HOST: db
       RAILS_ENV: production

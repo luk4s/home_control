@@ -17,7 +17,13 @@ export default class extends Controller {
     "currentMode",
     "outdoorTemperature"
   ]
-  static values = { url: String, isLogged: Boolean, currentPower: Number, currentMode: String, outdoorTemperature: Number }
+  static values = {
+    url: String,
+    isLogged: Boolean,
+    currentPower: Number,
+    currentMode: String,
+    outdoorTemperature: Number
+  }
 
   connect() {
     this.fetchData(this.urlValue);
@@ -29,6 +35,8 @@ export default class extends Controller {
    * */
   fetchData(url) {
     fetch(url).then(response => response.json()).then(duplex => {
+      if (!duplex.logged) return;
+
       this.loadingTarget.style.display = "none"
       this.cardsTarget.style.display = "block"
       console.debug(duplex);
@@ -43,9 +51,11 @@ export default class extends Controller {
     this.currentPowerProgressBarTarget.textContent = `${this.currentPowerValue}%`;
     this.currentPowerProgressBarTarget.ariaValueNow = this.currentPowerValue;
   }
+
   currentModeValueChanged() {
     this.currentModeTarget.textContent = this.currentModeValue;
   }
+
   outdoorTemperatureValueChanged() {
     this.outdoorTemperatureTarget.innerHTML = `${this.outdoorTemperatureValue}&#8451;`
   }

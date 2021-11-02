@@ -22,7 +22,7 @@ class HomesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: @home&.duplex }
+      format.json { render json: @home.duplex.call_unit! }
     end
   end
 
