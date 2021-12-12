@@ -4,33 +4,41 @@ services:
     image: redis
     ports:
       - 6379
-  db:
-    image: postgres
-    env_file: .env
-    ports:
-      - 5432
-    volumes:
-      - db_data:/var/lib/postgresql/data
+#  db:
+#    image: postgres
+#    env_file: .env
+#    ports:
+#      - 5432
+#    volumes:
+#      - db_data:/var/lib/postgresql/data
   app:
-    build: ./source/
+    build: .
     image: my_home_control
     restart: on-failure
     volumes:
       - gem_cache:/usr/local/bundle/gems
-      - app_logs:/app/log
       - app_public:/app/public
     ports:
       - 3000:3000
     env_file: .env
     environment:
       RAILS_SERVE_STATIC_FILES: 1
-      REDIS_URL: redis
-      DATABASE_HOST: db
+      REDIS_URL: redis://redis:6379/1
       RAILS_ENV: production
     depends_on:
-      - db
+#      - db
       - redis
     command: start
+  sidekiq:
+    image: my_home_control
+    env_file: .env
+    restart: on-failure
+    environment:
+      REDIS_URL: redis://redis:6379/1
+      RAILS_ENV: production
+    depends_on:
+      - redis
+    command: sidekiq
 volumes:
   app_public:
   db_data:

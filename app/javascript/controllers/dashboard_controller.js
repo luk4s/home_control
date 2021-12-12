@@ -11,7 +11,6 @@ import { Controller } from "stimulus"
 
 export default class extends Controller {
   static targets = [
-    "loading",
     "cards",
     "currentPowerProgressBar",
     "currentMode",
@@ -26,24 +25,7 @@ export default class extends Controller {
   }
 
   connect() {
-    this.fetchData(this.urlValue);
-  }
-
-  /**
-   * Get JSON values of Atrea Duplex
-   * @param {string} url
-   * */
-  fetchData(url) {
-    fetch(url).then(response => response.json()).then(duplex => {
-      if (!duplex.logged) return;
-
-      this.loadingTarget.style.display = "none"
-      this.cardsTarget.style.display = "block"
-      console.debug(duplex);
-      this.currentPowerValue = duplex.current_power;
-      this.currentModeValue = duplex.current_mode;
-      this.outdoorTemperatureValue = duplex.outdoor_temperature;
-    });
+    this.currentModeTarget.innerHTML = "<i class=\"fa fa-refresh fa-spin fa-2x fa-fw\"></i>Connecting..."
   }
 
   currentPowerValueChanged() {

@@ -1,10 +1,6 @@
 <% if current_user.home %>
   <div data-controller="dashboard" data-dashboard-url-value="<%= home_path(format: "json") %>">
-    <div class="text-center" data-dashboard-target="loading">
-      <i class="fa fa-refresh fa-spin fa-5x fa-fw"></i>
-      <span class="">Connecting...</span>
-    </div>
-    <div data-dashboard-target="cards" style="display: none">
+    <div data-dashboard-target="cards" style="">
       <div class="card mb-2">
         <div class="card-header">
           Rekuperace
@@ -26,7 +22,6 @@
           <dl class="row">
             <dt class="col-sm-3">Venku 🌳</dt>
             <dd class="col-sm-9" data-dashboard-target="outdoorTemperature"></dd>
-
             <dt class="col-sm-3">Uvnitř 🏠</dt>
             <dd class="col-sm-9" data-dashboard-target="indoorTemperature"></dd>
           </dl>
