@@ -9,6 +9,7 @@ class CreateHomes < ActiveRecord::Migration[6.1]
       t.binary :atrea_password
       t.binary :somfy_client_id
       t.binary :somfy_secret
+      t.string :somfy_token
       t.string :somfy_refresh_token
 
       t.timestamps

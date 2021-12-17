@@ -16,18 +16,22 @@ class ReadDuplexJob < ApplicationJob
 
     client = InfluxDB2::Client.new(influxdb.delete("url"), influxdb.delete("token"), {
       precision: InfluxDB2::WritePrecision::SECOND,
-    }.merge(influxdb.symbolize_keys))
+    }.reverse_merge(influxdb.symbolize_keys))
     write_api = client.create_write_api
-    influx_data = {
-      name: home.duplex_name,
-      fields: {
-        power: data[:current_power],
-        outdoor_temperature: data[:outdoor_temperature],
-      },
-      tags: { mode: data[:current_mode] },
-      time: Time.zone.now.to_i,
-    }
-    write_api.write data: InfluxDB2::Point.from_hash(influx_data)
+    # influx_data = {
+    #   name: "power",
+    #   fields: {
+    #     power: data[:current_power],
+    #     outdoor_temperature: data[:outdoor_temperature],
+    #   },
+    #   tags: { mode: data[:current_mode] },
+    # }
+    # write_api.write data: InfluxDB2::Point.from_hash(influx_data)
+    write_api.write(data: "air,current_mode=#{data[:current_mode]} power=#{data[:current_power]}")
+    write_api.write(data: "outdoor_temperature,sensor=atrea temperature=#{data[:outdoor_temperature]}")
+
+
+    # client.create_delete_api.delete(Time.zone.now.ago(1.hour), Time.zone.now)
   end
 
 end

@@ -28,8 +28,8 @@
         </div>
       </div>
     </div>
-
   </div>
+  <%= link_to icon("edit", t(:button_edit)), edit_home_path, title: t(:button_edit) %>
 <% else %>
   <%= render template: "new" %>
 <% end %>

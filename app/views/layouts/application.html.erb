@@ -14,12 +14,10 @@
 </head>
 <body class="controller-<%= controller_name %> action-<%= action_name %>" data-menu-item="<%= @menu_item.to_sym %>">
 <header data-turbolinks-permanent>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <!--<a class="navbar-brand" href="#">Navbar</a>-->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <%= fa_icon('bars') %>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <%= render_menu(:top_menu) %>
       <%= render_menu(:top_menu_account, { container_class: 'mr-right' }) %>
@@ -30,7 +28,7 @@
 <section id="main" class="container">
   <%= yield %>
 </section>
-<footer>
+<footer class="fixed-bottom d-none d-sm-block">
   <div class="container">
     &copy; Lukáš Pokorný
     <%= yield :footer %>
