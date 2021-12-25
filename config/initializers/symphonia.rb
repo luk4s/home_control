@@ -1,6 +1,6 @@
 Symphonia.configure do |config|
   config.after_login_path = ->(h) { h.symphonia.user_current_path }
-  config.allow_registrations = false
+  config.allow_registrations = true
   config.default_locale = :cs
 end
 Rails.application.config.to_prepare do

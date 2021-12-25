@@ -353,7 +353,7 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    symphonia (4.1.0)
+    symphonia (4.1.1)
       api-pagination (~> 4.7.0)
       authlogic (~> 6.4.0)
       awesome_nested_set (~> 3.2.1)

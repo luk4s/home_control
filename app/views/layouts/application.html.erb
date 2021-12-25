@@ -24,8 +24,8 @@
     </div>
   </nav>
 </header>
-<div id="flash_messages"><%= render_flash_messages.html_safe -%></div>
 <section id="main" class="container">
+  <slot id="flash_messages" name="flash_messages"><%= render_flash_messages.html_safe -%></slot>
   <%= yield %>
 </section>
 <footer class="fixed-bottom d-none d-sm-block">
