@@ -45,6 +45,5 @@ class Somfy
   def callback_url(context)
     # Rails.application.routes.url_helpers.somfy_home_url
     context.somfy_home_url
-    "https://fotky.svatebni.info/home/somfy"
   end
 end

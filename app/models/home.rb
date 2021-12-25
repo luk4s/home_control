@@ -6,17 +6,29 @@ class Home < ApplicationRecord
   attr_pgcrypto :atrea_password, :somfy_client_id, :somfy_secret
   belongs_to :user, class_name: "Symphonia::User"
 
-  store_accessor :duplex_auth_options, :user_id, :unit_id, :auth_token, :name, :login_in_progress, :valid_for, :user_texts, :modes, :user_modes, prefix: :duplex
+  store_accessor :duplex_auth_options, :user_id, :unit_id, :auth_token, :login_in_progress, :valid_for, prefix: :duplex
+  store_accessor :duplex_user_ctrl, :name, :user_texts, :modes, :user_modes, :sensors
 
   store_accessor :influxdb_options, :url, :token, :org, :bucket, prefix: :influxdb
 
-  # @return [Hash] with duplex sensor output
+  # @return [AtreaDuplex] with duplex sensor output
   def duplex
-    AtreaDuplex.instance.data(self)
+    @duplex ||= AtreaDuplex.new(self)
   end
 
   def somfy
     @somfy ||= Somfy.new self
+  end
+
+  def status=(name)
+    case name
+    when "poweroff"
+      duplex.power_off!
+    when "auto"
+      duplex.automatic!
+    else
+      # no supported yet
+    end
   end
 
 end

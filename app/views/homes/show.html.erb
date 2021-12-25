@@ -4,6 +4,7 @@
       <div class="card mb-2">
         <div class="card-header">
           Rekuperace
+          <%= icon("spinner spin 3x fw", "Login in progress") if current_user.home.duplex_login_in_progress %>
         </div>
         <div class="card-body">
           <h5 class="card-title">Aktuální výkon</h5>
@@ -11,6 +12,11 @@
           <div class="progress">
             <div data-dashboard-target="currentPowerProgressBar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
+        </div>
+        <div class="card-footer">
+          <%= link_to icon("power-off", "Vypnout"), home_path(current_user.home, home: { status: "poweroff" }, format: "json"), method: "patch", data: { remote: true, confirm: t(:text_are_you_sure) }, class: "btn btn-danger" %>
+          <%= link_to icon("cogs", "Automatika"), home_path(current_user.home, home: { status: "auto" }, format: "json"), method: "patch", data: { remote: true, confirm: t(:text_are_you_sure) }, class: "btn btn-secondary" %>
+          <%#= link_to icon("bullseye", "Větrání"), "", class: "btn btn-secondary" %>
         </div>
       </div>
 

@@ -20,26 +20,26 @@ class HomesController < ApplicationController
   end
 
   def show
-    @home = current_user.home
-    return redirect_to new_home_path unless @home
+    return redirect_to new_home_path unless home
 
+    ReadDuplexJob.perform_later(home)
     respond_to do |format|
       format.html
-      format.json { render json: @home.duplex }
+      format.json { render json: home.duplex }
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     home_attributes = entity_attributes
     home_attributes.delete(:atrea_password) if entity_attributes[:atrea_password].blank?
-    if home.update home_attributes
-      render :show
-    else
-      render :edit
+    home.update home_attributes
+    respond_to do |format|
+      format.html { render :edit }
+      format.json { render json: home.duplex }
     end
+
   end
 
   def somfy_authorize
@@ -61,7 +61,7 @@ class HomesController < ApplicationController
   private
 
   def entity_attributes
-    params.require(:home).permit(:atrea_login, :atrea_password, :somfy_client_id, :somfy_secret)
+    params.require(:home).permit(*%i[atrea_login atrea_password somfy_client_id somfy_secret login_in_progress status])
   end
 
   def home
