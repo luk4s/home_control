@@ -14,8 +14,8 @@
           </div>
         </div>
         <div class="card-footer">
-          <%= link_to icon("power-off", "Vypnout"), home_path(current_user.home, home: { status: "poweroff" }, format: "json"), method: "patch", data: { remote: true, confirm: t(:text_are_you_sure) }, class: "btn btn-danger" %>
-          <%= link_to icon("cogs", "Automatika"), home_path(current_user.home, home: { status: "auto" }, format: "json"), method: "patch", data: { remote: true, confirm: t(:text_are_you_sure) }, class: "btn btn-secondary" %>
+          <%= link_to icon("power-off", "Vypnout"), scenario_home_path(scenario: "poweroff"), data: { method: "patch", remote: true, confirm: t(:text_are_you_sure), disable_with: t(:text_send_to_unit) }, class: "btn btn-danger" %>
+          <%= link_to icon("cogs", "Automatika"), scenario_home_path(scenario: "auto"), data: { method: "patch", remote: true, confirm: t(:text_are_you_sure), disable_with: t(:text_send_to_unit) }, class: "btn btn-secondary" %>
           <%#= link_to icon("bullseye", "Větrání"), "", class: "btn btn-secondary" %>
         </div>
       </div>

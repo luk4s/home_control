@@ -20,7 +20,7 @@ class Home < ApplicationRecord
     @somfy ||= Somfy.new self
   end
 
-  def status=(name)
+  def scenario=(name)
     case name
     when "poweroff"
       duplex.power_off!

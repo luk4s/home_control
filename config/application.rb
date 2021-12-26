@@ -34,6 +34,7 @@ module HomeControl
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    config.action_mailer.default_url_options = { host: "home.luk4s.cz" }
     config.action_mailer.default_options = {
       from: 'home@luk4s.cz', host: 'home.luk4s.cz', reply_to: "admin@luk4s.cz",
     }

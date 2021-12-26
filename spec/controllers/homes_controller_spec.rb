@@ -17,4 +17,12 @@ RSpec.describe HomesController, type: :controller do
     end
   end
 
+  describe "#update", logged: true do
+    let!(:home) { FactoryBot.create :my_home, user: controller.current_user }
+
+    it "permitted params" do
+      expect { put :update, params: { id: home, home: { influxdb_url: "https://some.flux" } } }.to change(home, :influxdb_options)
+    end
+  end
+
 end
