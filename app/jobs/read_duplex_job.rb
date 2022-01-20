@@ -13,6 +13,7 @@ class ReadDuplexJob < ApplicationJob
 
     DuplexChannel.broadcast_to(home.user, data)
     return unless (influxdb = home.influxdb_options)
+    return if home.influxdb_url.blank?
 
     client = InfluxDB2::Client.new(influxdb.delete("url"), influxdb.delete("token"), {
       precision: InfluxDB2::WritePrecision::SECOND,

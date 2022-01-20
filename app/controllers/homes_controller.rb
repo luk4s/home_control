@@ -35,6 +35,7 @@ class HomesController < ApplicationController
     home_attributes = entity_attributes
     home_attributes.delete(:atrea_password) if entity_attributes[:atrea_password].blank?
     home.update home_attributes
+    ReadDuplexJob.set(wait: 10.seconds).perform_later(home)
     respond_to do |format|
       format.html { render :edit }
       format.json { render json: home.duplex }

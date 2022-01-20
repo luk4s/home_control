@@ -5,3 +5,7 @@ tmp/*
 !/tmp/pids
 coverage
 .env
+config/master.key
+config/credentials/*.key
+.github
+storage

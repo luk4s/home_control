@@ -8,20 +8,24 @@
 // </div>
 
 import { Controller } from "stimulus"
+import { patch } from '@rails/request.js'
 
 export default class extends Controller {
   static targets = [
     "cards",
     "currentPowerProgressBar",
     "currentMode",
-    "outdoorTemperature"
+    "outdoorTemperature",
+    "ventilationControls"
   ]
   static values = {
     url: String,
     isLogged: Boolean,
     currentPower: Number,
     currentMode: String,
-    outdoorTemperature: Number
+    outdoorTemperature: Number,
+    controls: Object,
+    locales: Object
   }
 
   connect() {
@@ -32,13 +36,33 @@ export default class extends Controller {
     this.currentPowerProgressBarTarget.style.width = `${this.currentPowerValue}%`;
     this.currentPowerProgressBarTarget.textContent = `${this.currentPowerValue}%`;
     this.currentPowerProgressBarTarget.ariaValueNow = this.currentPowerValue;
+    this.resetControls();
   }
 
   currentModeValueChanged() {
     this.currentModeTarget.textContent = this.currentModeValue;
+    this.resetControls();
   }
 
   outdoorTemperatureValueChanged() {
     this.outdoorTemperatureTarget.innerHTML = `${this.outdoorTemperatureValue}&#8451;`
+  }
+
+  resetControls() {
+    this.ventilationControlsTarget.querySelectorAll("a").forEach(i => {
+      i.querySelector("span").textContent = this.controlsValue[i.dataset.scenario]
+    })
+  }
+
+  async scenario(event) {
+    event.preventDefault();
+    const target = event.currentTarget;
+    if (confirm(this.localesValue.confirm)) {
+      const response = await patch(target.href)
+      if (response.ok) {
+        target.querySelector("span").textContent = this.localesValue.disable_with
+      }
+    }
+
   }
 }

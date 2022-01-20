@@ -4,8 +4,10 @@
   "dependencies": {
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
+    "@rails/request.js": "^0.0.6",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.4.3",
+    "bootstrap": "4.6.1",
     "stimulus": "^3.0.1",
     "turbolinks": "^5.2.0",
     "webpack": "^4.46.0",
@@ -13,6 +15,8 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "jquery": "^3.6.0",
+    "popper.js": "^1.16.1",
     "webpack-dev-server": "^3"
   }
 }

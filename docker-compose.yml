@@ -17,7 +17,6 @@ services:
     restart: on-failure
     volumes:
       - gem_cache:/usr/local/bundle/gems
-      - app_public:/app/public
     ports:
       - 3000:3000
     env_file: .env
@@ -40,7 +39,6 @@ services:
       - redis
     command: sidekiq
 volumes:
-  app_public:
   db_data:
   gem_cache:
 

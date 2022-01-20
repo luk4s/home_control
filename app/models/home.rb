@@ -26,6 +26,9 @@ class Home < ApplicationRecord
       duplex.power_off!
     when "auto"
       duplex.automatic!
+    when "ventilate"
+      duplex.control.mode = 1
+      duplex.control.power = 80
     else
       # no supported yet
     end

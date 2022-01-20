@@ -3,7 +3,7 @@
 
   <fieldset>
     <legend><%= t :legend_atrea %></legend>
-    <%= f.email_field :atrea_login, autocomplete: "off" %>
+    <%= f.text_field :atrea_login, autocomplete: "off" %>
     <%= f.password_field :atrea_password, autocomplete: "off" %>
 
     <details>
@@ -12,7 +12,6 @@
       <%= f.text_field :influxdb_token %>
       <%= f.text_field :influxdb_org %>
       <%= f.text_field :influxdb_bucket %>
-
     </details>
 
   </fieldset>

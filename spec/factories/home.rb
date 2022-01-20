@@ -6,5 +6,8 @@ FactoryBot.define do
     somfy_client_id { Faker::Internet.password }
     somfy_secret { Faker::Internet.device_token }
     somfy_refresh_token { Faker::Internet.device_token }
+    influxdb_options do
+      { "org" => "", "url" => "", "token" => "", "bucket" => "" }
+    end
   end
 end

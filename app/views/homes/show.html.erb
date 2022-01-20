@@ -1,8 +1,12 @@
 <% if current_user.home %>
-  <div data-controller="dashboard" data-dashboard-url-value="<%= home_path(format: "json") %>">
+  <div data-controller="dashboard" data-dashboard-url-value="<%= home_path(format: "json") %>" data-dashboard-locales-value="<%= { confirm: t(:text_are_you_sure), disable_with: t(:text_send_to_unit) }.to_json %>" data-dashboard-controls-value="<%= (controls = %w[poweroff auto ventilate].each_with_object({}) { |i, dict| dict[i] = t("controls.#{i}") }).to_json %>">
     <div data-dashboard-target="cards" style="">
       <div class="card mb-2">
         <div class="card-header">
+          <%= link_to "https://control.atrea.eu/comm/sw/user.php?sid=#{current_user.home.duplex_auth_token}&user=#{current_user.home.duplex_user_id}&unit=#{current_user.home.duplex_unit_id}&ver=003001009", target: "_blank", class: "pull-right" do %>
+            <%= image_tag "atrea.png", alt: "Atrea control" %>
+          <% end %>
+
           Rekuperace
           <%= icon("spinner spin 3x fw", "Login in progress") if current_user.home.duplex_login_in_progress %>
         </div>
@@ -13,10 +17,11 @@
             <div data-dashboard-target="currentPowerProgressBar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
         </div>
-        <div class="card-footer">
-          <%= link_to icon("power-off", "Vypnout"), scenario_home_path(scenario: "poweroff"), data: { method: "patch", remote: true, confirm: t(:text_are_you_sure), disable_with: t(:text_send_to_unit) }, class: "btn btn-danger" %>
-          <%= link_to icon("cogs", "Automatika"), scenario_home_path(scenario: "auto"), data: { method: "patch", remote: true, confirm: t(:text_are_you_sure), disable_with: t(:text_send_to_unit) }, class: "btn btn-secondary" %>
-          <%#= link_to icon("bullseye", "Větrání"), "", class: "btn btn-secondary" %>
+        <div class="card-footer" data-dashboard-target="ventilationControls">
+          <% data = { action: "click->dashboard#scenario" } %>
+          <%= link_to icon("power-off", ""), scenario_home_path(scenario: "poweroff"), data: data.merge(scenario: "poweroff"), class: "btn btn-danger" %>
+          <%= link_to icon("cogs", ""), scenario_home_path(scenario: "auto"), data: data.merge(scenario: "auto"), class: "btn btn-secondary" %>
+          <%= link_to icon("bullseye", ""), scenario_home_path(scenario: "ventilate"), data: data.merge(scenario: "ventilate"), class: "btn btn-light" %>
         </div>
       </div>
 
