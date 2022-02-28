@@ -14,3 +14,4 @@ ActiveStorage.start()
 
 import "controllers"
 import "../src/bootstrap"
+import "../src/influx"

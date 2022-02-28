@@ -28,12 +28,6 @@
   <slot id="flash_messages" name="flash_messages"><%= render_flash_messages.html_safe -%></slot>
   <%= yield %>
 </section>
-<footer class="fixed-bottom d-none d-sm-block">
-  <div class="container">
-    &copy; Lukáš Pokorný
-    <%= yield :footer %>
-  </div>
-</footer>
 
 <div id="ajax-indicator" style="display:none"><i class="fa fa-spinner fa-spin fa-large"></i></div>
 </body>

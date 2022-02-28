@@ -31,6 +31,24 @@ class HomesController < ApplicationController
 
   def edit; end
 
+  def history
+    return render_404 if (influxdb = Rails.application.credentials[:influxdb]).blank?
+
+    client = InfluxDB2::Client.new(influxdb[:url], influxdb[:token], {
+      precision: InfluxDB2::WritePrecision::SECOND,
+    }.reverse_merge(influxdb))
+    query_api = client.create_query_api
+    query = "from(bucket: \"home.luk4s.cz\") |> range(start: -6h, stop: now()) " \
+      "|> filter(fn: (r) => r._measurement == \"#{home.influxdb_id}\")" \
+      "|> filter(fn: (r) => r._field == \"power\")" \
+      "|> group(columns: [\"_field\"])" \
+      "|> aggregateWindow(every: 1m, fn: last, createEmpty: false)" \
+      "|> yield(name: \"last\")"
+    result = query_api.query(query: query)
+    @data = result.values.flatten.map(&:records).flatten.sort_by(&:time).collect { |i| { x: Time.zone.parse(i.time).strftime("%H:%M"), y: i.value } }
+    render json: @data
+  end
+
   def update
     home_attributes = entity_attributes
     home_attributes.delete(:atrea_password) if entity_attributes[:atrea_password].blank?

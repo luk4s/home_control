@@ -12,14 +12,14 @@ class ReadDuplexJob < ApplicationJob
     return unless (data = home.duplex.data)
 
     DuplexChannel.broadcast_to(home.user, data)
-    return unless (influxdb = home.influxdb_options)
-    return if home.influxdb_url.blank?
 
-    client = InfluxDB2::Client.new(influxdb.delete("url"), influxdb.delete("token"), {
+    return if (influxdb = Rails.application.credentials[:influxdb]).blank?
+
+    client = InfluxDB2::Client.new(influxdb[:url], influxdb[:token], {
       precision: InfluxDB2::WritePrecision::SECOND,
-    }.reverse_merge(influxdb.symbolize_keys))
+    }.reverse_merge(influxdb))
     write_api = client.create_write_api
-    write_api.write(data: "atrea,current_mode=#{data[:current_mode]} power=#{data[:current_power]},temperature=#{data[:outdoor_temperature]}")
+    write_api.write(data: "#{home.influxdb_id},current_mode=#{data[:current_mode]} power=#{data[:current_power]},outdoor_temperature=#{data[:outdoor_temperature]},input_temperature=#{data[:input_temperature]}")
 
     # client.create_delete_api.delete(Time.zone.now.ago(1.hour), Time.zone.now)
   end

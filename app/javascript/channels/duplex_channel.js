@@ -18,6 +18,18 @@ consumer.subscriptions.create("DuplexChannel", {
       controller.dataset.dashboardPreheatTemperatureValue = data["preheat_temperature"]
       controller.dataset.dashboardInputTemperatureValue = data["input_temperature"]
       controller.dataset.dashboardPreheatingValue = data["preheating"]
+
+      if (window.chart) {
+        const t = new Date()
+        data = {"current_power": 95}
+        const label = `${t.getHours()}:${t.getMinutes()}`
+        window.chart.data.labels.push(label);
+        chart.data.datasets.forEach((dataset) => {
+          dataset.data.push({ x: label, y: data["current_power"] });
+        });
+        chart.update();
+      }
+
     }
     // Called when there's incoming data on the websocket for this channel
   }

@@ -1,2 +1,9 @@
-<%= title t(:button_edit) %>
+<%= title current_user.name %>
+<dl class="row">
+  <dt class="col-sm-3"><%= Symphonia::User.human_attribute_name(:current_login_at) %></dt>
+  <dd class="col-sm-9"><%= current_user.current_login_at && time_tag(current_user.current_login_at) || "-" %></dd>
+  <dt class="col-sm-3"><%= Symphonia::User.human_attribute_name(:single_access_token) %></dt>
+  <dd class="col-sm-9"><code><%= current_user.single_access_token %></code></dd>
+
+</dl>
 <%= render "form" %>

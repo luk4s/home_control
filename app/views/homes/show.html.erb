@@ -15,6 +15,7 @@
           <div class="progress">
             <div data-dashboard-target="currentPowerProgressBar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
+          <!--<canvas id="modeHistory" width="600" height="100"></canvas>-->
         </div>
         <div class="card-footer" data-dashboard-target="ventilationControls">
           <% data = { action: "click->dashboard#scenario" } %>
@@ -43,7 +44,6 @@
       </div>
     </div>
   </div>
-  <%= link_to icon("edit", t(:button_edit)), edit_home_path, title: t(:button_edit) %>
 <% else %>
   <%= render template: "new" %>
 <% end %>
