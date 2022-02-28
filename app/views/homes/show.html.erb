@@ -1,17 +1,16 @@
 <% if current_user.home %>
-  <div data-controller="dashboard" data-dashboard-url-value="<%= home_path(format: "json") %>" data-dashboard-locales-value="<%= { confirm: t(:text_are_you_sure), disable_with: t(:text_send_to_unit) }.to_json %>" data-dashboard-controls-value="<%= (controls = %w[poweroff auto ventilate].each_with_object({}) { |i, dict| dict[i] = t("controls.#{i}") }).to_json %>">
+  <div data-controller="dashboard" data-dashboard-url-value="<%= home_path(format: "json") %>" data-dashboard-locales-value="<%= { confirm: t(:text_are_you_sure), disable_with: t(:text_send_to_unit) }.to_json %>" data-dashboard-controls-value="<%= atrea_controls.to_json %>">
     <div data-dashboard-target="cards" style="">
       <div class="card mb-2">
         <div class="card-header">
-          <%= link_to "https://control.atrea.eu/comm/sw/user.php?sid=#{current_user.home.duplex_auth_token}&user=#{current_user.home.duplex_user_id}&unit=#{current_user.home.duplex_unit_id}&ver=003001009", target: "_blank", class: "pull-right" do %>
+          <%= link_to "https://control.atrea.eu/comm/sw/user.php?sid=#{current_user.home.duplex_auth_token}&user=#{current_user.home.duplex_user_id}&unit=#{current_user.home.duplex_unit_id}&ver=003001009", target: "_blank", class: "float-right" do %>
             <%= image_tag "atrea.png", alt: "Atrea control" %>
           <% end %>
-
-          Rekuperace
-          <%= icon("spinner spin 3x fw", "Login in progress") if current_user.home.duplex_login_in_progress %>
+          <%= t :legend_atrea %>
+          <%= icon("spinner spin 3x fw", t(:text_login_inprogress)) if current_user.home.duplex_login_in_progress %>
         </div>
         <div class="card-body">
-          <h5 class="card-title">Aktuální výkon</h5>
+          <h5 class="card-title"><%= t :text_current_power %></h5>
           <h6 data-dashboard-target="currentMode" class="card-subtitle mb-2 text-muted"></h6>
           <div class="progress">
             <div data-dashboard-target="currentPowerProgressBar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
@@ -19,22 +18,26 @@
         </div>
         <div class="card-footer" data-dashboard-target="ventilationControls">
           <% data = { action: "click->dashboard#scenario" } %>
-          <%= link_to icon("power-off", ""), scenario_home_path(scenario: "poweroff"), data: data.merge(scenario: "poweroff"), class: "btn btn-danger" %>
-          <%= link_to icon("cogs", ""), scenario_home_path(scenario: "auto"), data: data.merge(scenario: "auto"), class: "btn btn-secondary" %>
-          <%= link_to icon("bullseye", ""), scenario_home_path(scenario: "ventilate"), data: data.merge(scenario: "ventilate"), class: "btn btn-light" %>
+          <% atrea_controls.each do |name, options| %>
+            <%= link_to icon(options[:icon], options[:text]), options[:url], data: data.merge(scenario: name), class: "btn #{options[:css_class]}" %>
+          <% end %>
         </div>
       </div>
 
       <div class="card">
         <div class="card-header">
-          Teplota
+          <%= t :heading_temperature %>
         </div>
         <div class="card-body">
           <dl class="row">
-            <dt class="col-sm-3">Venku 🌳</dt>
+            <dt class="col-sm-3">🌳&nbsp;<%= t :text_outdoor_temperature %></dt>
             <dd class="col-sm-9" data-dashboard-target="outdoorTemperature"></dd>
-            <dt class="col-sm-3">Uvnitř 🏠</dt>
-            <dd class="col-sm-9" data-dashboard-target="indoorTemperature"></dd>
+            <dt class="col-sm-3">🌬&nbsp;<%= t :text_input_temperature %></dt>
+            <dd class="col-sm-9" data-dashboard-target="inputTemperature"></dd>
+            <dt class="col-sm-3">🎛&nbsp;<%= t :text_preheat_temperature %></dt>
+            <dd class="col-sm-9" data-dashboard-target="preheatTemperature"></dd>
+            <dt class="col-sm-3">🌡&nbsp;<%= t :text_preheating %></dt>
+            <dd class="col-sm-9" data-dashboard-target="preheating" data-values="<%= t("preheating").to_json %>"></dd>
           </dl>
         </div>
       </div>

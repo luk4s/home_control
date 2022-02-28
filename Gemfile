@@ -44,7 +44,7 @@ group :development do
   gem 'spring'
 end
 
-gem "atrea_control", "~> 2.0.1"
+gem "atrea_control", "~> 2.1.0"
 gem 'symphonia', '~> 4.1'
 source "https://gems.luk4s.cz" do
   gem 'symphonia_spec', group: %i[development test]

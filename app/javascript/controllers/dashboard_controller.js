@@ -16,6 +16,9 @@ export default class extends Controller {
     "currentPowerProgressBar",
     "currentMode",
     "outdoorTemperature",
+    "preheatTemperature",
+    "inputTemperature",
+    "preheating",
     "ventilationControls"
   ]
   static values = {
@@ -24,6 +27,9 @@ export default class extends Controller {
     currentPower: Number,
     currentMode: String,
     outdoorTemperature: Number,
+    preheatTemperature: Number,
+    inputTemperature: Number,
+    preheating: Boolean,
     controls: Object,
     locales: Object
   }
@@ -47,10 +53,26 @@ export default class extends Controller {
   outdoorTemperatureValueChanged() {
     this.outdoorTemperatureTarget.innerHTML = `${this.outdoorTemperatureValue}&#8451;`
   }
+  preheatTemperatureValueChanged() {
+    this.preheatTemperatureTarget.innerHTML = `${this.preheatTemperatureValue}&#8451;`
+  }
+  inputTemperatureValueChanged() {
+    this.inputTemperatureTarget.innerHTML = `${this.inputTemperatureValue}&#8451;`
+  }
+  preheatingValueChanged() {
+    const locales = JSON.parse(this.preheatingTarget.dataset.values)
+    const icon = document.createElement("i")
+    icon.className = `fa fa-thermometer-${this.preheatingValue ? "full" : "empty"}`
+    this.preheatingTarget.innerHTML = (this.preheatingValue ? locales.enable : locales.disable) + '&nbsp;'
+    this.preheatingTarget.classList.toggle("text-danger")
+    this.preheatingTarget.appendChild(icon);
+  }
 
   resetControls() {
     this.ventilationControlsTarget.querySelectorAll("a").forEach(i => {
-      i.querySelector("span").textContent = this.controlsValue[i.dataset.scenario]
+      const name = i.dataset.scenario;
+      i.querySelector("span").textContent = this.controlsValue[name].text
+      i.querySelector("i").className = `fa fa-${this.controlsValue[name].icon}`
     })
   }
 
@@ -61,8 +83,9 @@ export default class extends Controller {
       const response = await patch(target.href)
       if (response.ok) {
         target.querySelector("span").textContent = this.localesValue.disable_with
+        target.querySelector("i").className = "fa fa-cog fa-spin"
       }
     }
-
   }
+
 }

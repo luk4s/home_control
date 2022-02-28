@@ -19,8 +19,7 @@ class ReadDuplexJob < ApplicationJob
       precision: InfluxDB2::WritePrecision::SECOND,
     }.reverse_merge(influxdb.symbolize_keys))
     write_api = client.create_write_api
-    write_api.write(data: "air,current_mode=#{data[:current_mode]} power=#{data[:current_power]}")
-    write_api.write(data: "outdoor_temperature,sensor=atrea temperature=#{data[:outdoor_temperature]}")
+    write_api.write(data: "atrea,current_mode=#{data[:current_mode]} power=#{data[:current_power]},temperature=#{data[:outdoor_temperature]}")
 
     # client.create_delete_api.delete(Time.zone.now.ago(1.hour), Time.zone.now)
   end

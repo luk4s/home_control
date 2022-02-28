@@ -1,12 +1,22 @@
 cs:
   meta_title: Home Control
   heading_new_home: Nová domácnost
+  heading_temperature: Další údaje
   atrea:
     login: Login
   legend_atrea: Rekuperace
   legend_somfy: Somfy
   text_send_to_unit: provádím...
+  text_preheating: Dohřívání
+  text_preheat_temperature: Nastavený dohřev
+  text_input_temperature: Teplota vzduchu
+  text_outdoor_temperature: Venkovní teplota
+  text_current_power: Aktuální výkon
+  text_login_inprogress: Přihlašuji...
   controls:
     poweroff: Vypnuto
     auto: Ovladač
     ventilate: Větrání
+  preheating:
+    enable: Zapnuto
+    disable: Vypnuto

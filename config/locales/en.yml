@@ -1,12 +1,22 @@
 en:
   meta_title: Home Control
   heading_new_home: New home
+  heading_temperature: Temperatures
   atrea:
     login: Login
   legend_atrea: Ventilation unit
   legend_somfy: Somfy
   text_send_to_unit: changing...
+  text_preheating: Preheating
+  text_preheat_temperature: Requested temperature
+  text_input_temperature: Supply air temperature
+  text_outdoor_temperature: Outdoor temperature
+  text_current_power: Current power
+  text_login_inprogress: Login in progress...
   controls:
     poweroff: Power OFF
     auto: Wall control
     ventilate: Ventilation
+  preheating:
+    enable: Heating
+    disable: Off

@@ -6,23 +6,9 @@
     <%= f.text_field :atrea_login, autocomplete: "off" %>
     <%= f.password_field :atrea_password, autocomplete: "off" %>
 
-    <details>
-      <summary>InfluxDB connection</summary>
-      <%= f.url_field :influxdb_url %>
-      <%= f.text_field :influxdb_token %>
-      <%= f.text_field :influxdb_org %>
-      <%= f.text_field :influxdb_bucket %>
-    </details>
-
-  </fieldset>
-  <fieldset>
-    <legend><%= t :legend_somfy %></legend>
-    <%= f.text_field :somfy_client_id, autocomplete: "off" %>
-    <%= f.text_field :somfy_secret, autocomplete: "off" %>
   </fieldset>
 
   <p class="buttons">
     <%= f.primary %>
-    <%= link_to icon("key", "Authorize"), somfy_authorize_home_path, target: "_blank", class: "btn btn-secondary" if f.object.somfy_secret %>
   </p>
 <% end %>

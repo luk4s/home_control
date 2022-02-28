@@ -15,6 +15,9 @@ consumer.subscriptions.create("DuplexChannel", {
       controller.dataset.dashboardCurrentModeValue = data["current_mode"]
       controller.dataset.dashboardCurrentPowerValue = data["current_power"]
       controller.dataset.dashboardOutdoorTemperatureValue = data["outdoor_temperature"]
+      controller.dataset.dashboardPreheatTemperatureValue = data["preheat_temperature"]
+      controller.dataset.dashboardInputTemperatureValue = data["input_temperature"]
+      controller.dataset.dashboardPreheatingValue = data["preheating"]
     }
     // Called when there's incoming data on the websocket for this channel
   }
