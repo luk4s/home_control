@@ -9,6 +9,8 @@
   <%= yield :stylesheet_tags %>
   <%# javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= javascript_packs_with_chunks_tag 'application' %>
+  <%= javascript_packs_with_chunks_tag 'bootstrap' %>
+  <%= javascript_packs_with_chunks_tag 'controllers' %>
   <%= yield :javascript_tags %>
   <%= csrf_meta_tags %>
 </head>
