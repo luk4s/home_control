@@ -36,7 +36,8 @@ class Home < ApplicationRecord
 
   # @return [String] "measurement" of all data bucket
   def influxdb_id
-    "home-#{id}"
+    # "home-#{id}"
+    "atrea"
   end
 
 end

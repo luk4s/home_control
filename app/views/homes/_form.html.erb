@@ -6,6 +6,13 @@
     <%= f.text_field :atrea_login, autocomplete: "off" %>
     <%= f.password_field :atrea_password, autocomplete: "off" %>
   </fieldset>
+  <details>
+    <summary>InfluxDB connection</summary>
+    <%= f.url_field :influxdb_url %>
+    <%= f.text_field :influxdb_token %>
+    <%= f.text_field :influxdb_org %>
+    <%= f.text_field :influxdb_bucket %>
+  </details>
 
   <p class="buttons">
     <%= f.primary %>
