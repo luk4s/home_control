@@ -45,12 +45,10 @@ jobs:
         run: bundle exec rails db:setup
       - name: Precompile assets
         run: bundle exec rails assets:precompile
-      - uses: actions/upload-artifact@master
+      - uses: actions/upload-artifact@v2
         with:
           name: assets
-          path: |
-            public/assets
-            public/packs
+          path: public
       - name: RSpec
         run: bundle exec rspec
   deploy:
@@ -67,12 +65,9 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - uses: actions/download-artifact@master
+      - uses: actions/download-artifact@v3
         with:
           name: assets
-          path: |
-            public/assets
-            public/packs
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2

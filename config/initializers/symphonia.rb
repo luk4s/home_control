@@ -38,7 +38,7 @@ Symphonia::MenuManager.map :top_menu_account do |m|
   m[:my_account] = {
     label: :label_my_account,
     icon: 'fa fa-wrench',
-    url: ->(h) { h.edit_home_path },
+    url: ->(h) { h.main_app.edit_home_path },
     if: proc { Symphonia::User.current.logged_in? }
   }
   m[:logout] = {
