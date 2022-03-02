@@ -5,7 +5,7 @@ install() {
   bundle exec rails db:migrate RAILS_ENV=production
 }
 sidekiq() {
-    bundle exec sidekiq -e "${RAILS_ENV}"
+  bundle exec sidekiq -e "${RAILS_ENV}"
 }
 server() {
   bundle exec puma -e "${RAILS_ENV}" -p 3000
