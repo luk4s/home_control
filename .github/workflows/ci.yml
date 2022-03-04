@@ -48,7 +48,9 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: assets
-          path: public
+          path: | 
+            public/assets
+            public/packs
       - name: RSpec
         run: bundle exec rspec
   deploy:
@@ -68,6 +70,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: assets
+          path: public
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
