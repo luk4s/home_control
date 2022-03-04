@@ -17,6 +17,7 @@ class ReadDuplexJob < ApplicationJob
     return unless (influxdb = home.influxdb_options)
     return if home.influxdb_url.blank?
 
+    influxdb.symbolize_keys!
     client = InfluxDB2::Client.new(influxdb[:url], influxdb[:token], {
       precision: InfluxDB2::WritePrecision::SECOND,
     }.reverse_merge(influxdb))
