@@ -48,7 +48,10 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: assets
-          path: public/{assets,packs}
+          path: |
+            public/assets
+            public/packs
+          retention-days: 1
       - name: RSpec
         run: bundle exec rspec
   deploy:
