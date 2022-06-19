@@ -2,6 +2,8 @@ class HomesController < ApplicationController
   before_action :login_require
   before_action :home, except: %i[new create]
 
+  skip_forgery_protection if: -> { request.format.json? }, only: %i[scenario]
+
   def new
     raise ArgumentError, "you already have a home!" if current_user.home
 
@@ -62,8 +64,11 @@ class HomesController < ApplicationController
 
   # Set prepared scenario of duplex
   def scenario
-    home.scenario = params.require(:scenario)
-    ReadDuplexJob.perform_later(home)
+    if (home.scenario = params.require(:scenario)) == "manual"
+      home.manual_control!(mode: params.require(:mode), power: params.require(:power).to_i)
+    end
+    ReadDuplexJob.set(wait: 5.seconds).perform_later(home)
+    ReadDuplexJob.set(wait: 10.seconds).perform_later(home)
     respond_to do |format|
       format.html { render :show }
       format.json { render json: home.duplex }

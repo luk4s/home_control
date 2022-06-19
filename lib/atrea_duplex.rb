@@ -36,6 +36,7 @@ class AtreaDuplex
   end
 
   def automatic!
+    control.power = 0
     control.mode = 1
   end
 

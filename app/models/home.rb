@@ -20,6 +20,17 @@ class Home < ApplicationRecord
     @somfy ||= Somfy.new self
   end
 
+  # @param [String] mode
+  # @param [Integer] power
+  def manual_control!(mode:, power:)
+    available_modes = duplex.control.user_ctrl.modes
+    mode_id = available_modes.key(mode)
+    raise ArgumentError, "mode #{mode} is not allowed. Possible modes: #{available_modes.values.join(', ')}" unless mode_id
+
+    duplex.control.mode = mode_id.to_i
+    duplex.control.power = power.to_i
+  end
+
   def scenario=(name)
     case name
     when "poweroff"
@@ -27,11 +38,13 @@ class Home < ApplicationRecord
     when "auto"
       duplex.automatic!
     when "ventilate"
-      duplex.control.mode = 1
-      duplex.control.power = 80
+      duplex.control.mode = 2
+      duplex.control.power = 90
     else
       # no supported yet
     end
+
+    name
   end
 
   # @return [String] "measurement" of all data bucket
