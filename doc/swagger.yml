@@ -1,0 +1,123 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/luk4s/home-control/1.0.0
+  - description: Production
+    url: https://home.luk4s.cz
+info:
+  description: HomeControl - atrea recuperation
+  version: "1.0.0"
+  title: HomeControl
+  contact:
+    email: admin@luk4s.cz
+  license:
+    name: GPL-3.0
+    url: 'https://www.gnu.org/licenses/gpl-3.0.en.html'
+paths:
+  /home:
+    get:
+      summary: recuperation data
+      operationId: home
+      description: |
+        Current data from unit
+      responses:
+        '200':
+          description: unit data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HomeData'
+  /home/scenario/{scenario}:
+    parameters:
+      - name: scenario
+        in: path
+        description: name of built-in scenario
+        required: true
+        schema:
+          type: string
+          enum:
+            - poweroff
+            - auto
+            - ventilate
+            - manual
+      - name: mode
+        in: query
+        description: in case of `manual` set one of mode (works only in `manual` scenario)
+        schema:
+          type: string
+          description: | 
+            Value depend on each duplex unit and must be localized in language of duplex.
+            Most common modes are
+          enum:
+            - Vypnuto
+            - Automat
+            - Větrání
+      - name: power
+        in: query
+        schema:
+          type: integer
+          minimum: 20
+          maximum: 100
+    patch:
+      summary: set recuperation control
+      operationId: change-home-air
+      description: |
+        Apply one of pre-defined scenario in home-control
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HomeData'
+
+security:
+  - tokenAuth: []
+components:
+  securitySchemes:
+    tokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Token
+  schemas:
+    HomeData:
+      type: object
+
+      properties:
+        current_mode:
+          type: string
+          example: Auto
+        current_power:
+          type: integer
+          example: 33
+        outdoor_temperature:
+          type: number
+          format: float
+          example: 8.1
+        indoor_temperature:
+          type: number
+          format: float
+          example: 19.8
+        preheat_temperature:
+          type: number
+          format: float
+          example: 17
+        preheating:
+          type: boolean
+          example: false
+        valid_for:
+          type: string
+          format: date-time
+          description: How old are data?
+        sid:
+          type: string
+          example: "1234"
+          description: session ID for communication with Atrea server
+        login_in_progress:
+          type: boolean
+          description: HomeControl trying to logging ?
