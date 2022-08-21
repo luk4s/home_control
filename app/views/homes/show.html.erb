@@ -1,6 +1,6 @@
 <% if current_user.home %>
   <div data-controller="dashboard" data-dashboard-url-value="<%= home_path(format: "json") %>" data-dashboard-locales-value="<%= { confirm: t(:text_are_you_sure), disable_with: t(:text_send_to_unit) }.to_json %>" data-dashboard-controls-value="<%= atrea_controls.to_json %>">
-    <div data-dashboard-target="cards" style="">
+    <div data-dashboard-target="cards">
       <div class="card mb-2">
         <div class="card-header">
           <%= link_to "https://control.atrea.eu/comm/sw/user.php?sid=#{current_user.home.duplex_auth_token}&user=#{current_user.home.duplex_user_id}&unit=#{current_user.home.duplex_unit_id}&ver=003001009", target: "_blank", class: "float-right" do %>
@@ -15,13 +15,21 @@
           <div class="progress">
             <div data-dashboard-target="currentPowerProgressBar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
-          <!--<canvas id="modeHistory" width="600" height="100"></canvas>-->
         </div>
         <div class="card-footer" data-dashboard-target="ventilationControls">
-          <% data = { action: "click->dashboard#scenario" } %>
-          <% atrea_controls.each do |name, options| %>
-            <%= link_to icon(options[:icon], options[:text]), options[:url], data: data.merge(scenario: name), class: "btn #{options[:css_class]}" %>
-          <% end %>
+          <%= link_to icon("power-off", t("controls.poweroff")), scenario_home_path(scenario: "poweroff"), data: { action: "click->dashboard#scenario:prevent", scenario: "poweroff" }, class: "btn btn-danger" %>
+          <%= link_to icon("auto", t("controls.auto")), scenario_home_path(scenario: "auto"), data: { action: "click->dashboard#scenario:prevent", scenario: "auto" }, class: "btn btn-secondary" %>
+          <%= link_to icon("bullseye", t("controls.ventilate")), scenario_home_path(scenario: "manual", mode: current_user.home.duplex.control.user_ctrl.modes["2"]), data: { action: "click->dashboard#manualDialog:prevent", scenario: "manual" }, class: "btn btn-light" %>
+
+          <div id="manual_power_control" class="d-none">
+            <input type="range" id="power" name="power" min="20" max="90" value="0" data-dashboard-target="manualPowerSlider" class="form-control-range" data-action="change->dashboard#manualControl" list="tickmarks">
+            <datalist id="tickmarks">
+              <% (2..9).each do |tick| %>
+                <% value = tick * 10 %>
+                <option value="<%= value %>" label="<%= [2, 5, 9].include?(tick) ? "#{value}%" : nil %>"></option>
+              <% end %>
+            </datalist>
+          </div>
         </div>
       </div>
 

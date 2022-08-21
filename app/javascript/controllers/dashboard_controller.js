@@ -14,6 +14,7 @@ export default class extends Controller {
   static targets = [
     "cards",
     "currentPowerProgressBar",
+    "manualPowerSlider",
     "currentMode",
     "outdoorTemperature",
     "preheatTemperature",
@@ -42,6 +43,7 @@ export default class extends Controller {
     this.currentPowerProgressBarTarget.style.width = `${this.currentPowerValue}%`;
     this.currentPowerProgressBarTarget.textContent = `${this.currentPowerValue}%`;
     this.currentPowerProgressBarTarget.ariaValueNow = this.currentPowerValue;
+    this.manualPowerSliderTarget.value = this.currentPowerValue;
     this.resetControls();
   }
 
@@ -53,12 +55,15 @@ export default class extends Controller {
   outdoorTemperatureValueChanged() {
     this.outdoorTemperatureTarget.innerHTML = `${this.outdoorTemperatureValue}&#8451;`
   }
+
   preheatTemperatureValueChanged() {
     this.preheatTemperatureTarget.innerHTML = `${this.preheatTemperatureValue}&#8451;`
   }
+
   inputTemperatureValueChanged() {
     this.inputTemperatureTarget.innerHTML = `${this.inputTemperatureValue}&#8451;`
   }
+
   preheatingValueChanged() {
     const locales = JSON.parse(this.preheatingTarget.dataset.values)
     const icon = document.createElement("i")
@@ -69,7 +74,7 @@ export default class extends Controller {
   }
 
   resetControls() {
-    this.ventilationControlsTarget.querySelectorAll("a").forEach(i => {
+    this.ventilationControlsTarget.querySelectorAll(":scope > a").forEach(i => {
       const name = i.dataset.scenario;
       i.querySelector("span").textContent = this.controlsValue[name].text
       i.querySelector("i").className = `fa fa-${this.controlsValue[name].icon}`
@@ -77,7 +82,6 @@ export default class extends Controller {
   }
 
   async scenario(event) {
-    event.preventDefault();
     const target = event.currentTarget;
     if (confirm(this.localesValue.confirm)) {
       const response = await patch(target.href)
@@ -85,6 +89,32 @@ export default class extends Controller {
         target.querySelector("span").textContent = this.localesValue.disable_with
         target.querySelector("i").className = "fa fa-cog fa-spin"
       }
+    }
+  }
+
+  /* Show dialog for manual set of power */
+  async manualDialog(event) {
+    event.currentTarget.style.display = "none";
+    this.ventilationControlsTarget.querySelector("#manual_power_control").classList.toggle("d-none", false)
+    this.ventilationControlsTarget.querySelector("#manual_power_control").classList.toggle("d-inline-block", true)
+  }
+
+  /* Submit manual power for ventilate */
+  async manualControl(event) {
+    const target = this.ventilationControlsTarget.querySelector(":scope > a[data-scenario=manual]");
+    const value = this.manualPowerSliderTarget.value;
+    if (confirm(`power = ${value}%\n${this.localesValue.confirm}`)) {
+      const response = await patch(target.href, { query: { power: value } })
+      if (response.ok) {
+        target.querySelector("span").textContent = this.localesValue.disable_with
+        target.querySelector("i").className = "fa fa-cog fa-spin"
+
+        target.style.display = null;
+        this.ventilationControlsTarget.querySelector("#manual_power_control").classList.toggle("d-none", true)
+        this.ventilationControlsTarget.querySelector("#manual_power_control").classList.toggle("d-inline-block", false)
+      }
+    } else {
+      this.manualPowerSliderTarget.value = this.currentPowerValue;
     }
   }
 

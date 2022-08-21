@@ -27,8 +27,8 @@ class Home < ApplicationRecord
     mode_id = available_modes.key(mode)
     raise ArgumentError, "mode #{mode} is not allowed. Possible modes: #{available_modes.values.join(', ')}" unless mode_id
 
-    duplex.control.mode = mode_id.to_i
     duplex.control.power = power.to_i
+    duplex.control.mode = mode_id.to_i
   end
 
   # https://control.atrea.eu/comm/sw/unit.php?ver=003001022&_user=2113&_unit=126399332270040&_t=config/xml.cgi&auth=10317&H1070800100=&_w=1
