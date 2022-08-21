@@ -73,10 +73,12 @@ jobs:
         with:
           name: assets
           path: public/
+      - name: Read version
+        run: APP_VERSION=$(cat ./version); echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: luk4s/home_control:latest
+          tags: ${{ env.USER }}/${{ env.REPO }}:latest,${{ env.USER }}/${{ env.REPO }}:${{ env.VERSION }}
