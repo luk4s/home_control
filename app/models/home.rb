@@ -31,6 +31,13 @@ class Home < ApplicationRecord
     duplex.control.power = power.to_i
   end
 
+  # https://control.atrea.eu/comm/sw/unit.php?ver=003001022&_user=2113&_unit=126399332270040&_t=config/xml.cgi&auth=10317&H1070800100=&_w=1
+  # https://control.atrea.eu/comm/sw/unit.php?ver=003001009&_user=2113&_unit=126399332270040&_t=config/xml.cgi&auth=16398&H1070800077&H1070000002&_w=1
+  # # H1070800083 => 83%
+  # # H1070800100 => 100%
+  #   H1070800090
+  # H1070900001 +  H1070100002 => auto
+  # H1070900002 => vetrani
   def scenario=(name)
     case name
     when "poweroff"
