@@ -81,4 +81,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.USER }}/${{ env.REPO }}:latest,${{ env.USER }}/${{ env.REPO }}:${{ env.VERSION }}
+          tags: luk4s/home_control:latest,luk4s/home_control:${{ env.VERSION }}
