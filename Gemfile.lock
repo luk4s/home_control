@@ -324,7 +324,7 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    symphonia (5.0.0)
+    symphonia (5.0.1)
       api-pagination (~> 4.7.0)
       authlogic (~> 6.4.0)
       bootstrap_form (~> 4.4.0)
@@ -375,7 +375,6 @@ DEPENDENCIES
   influxdb-client (~> 2.1)
   jbuilder (~> 2.7)
   listen (~> 3.3)
-  net-smtp (~> 0.3.1)
   oauth2 (~> 1.4)
   pg (~> 1.2.3)
   pry-rails
@@ -383,7 +382,7 @@ DEPENDENCIES
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.4, >= 6.1.4.1)
   spring
-  symphonia (~> 5.0)
+  symphonia (~> 5.0, >= 5.0.1)
   symphonia_spec!
   web-console (>= 4.1.0)
   webpacker (~> 5.0)

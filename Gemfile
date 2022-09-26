@@ -16,7 +16,6 @@ gem 'jbuilder', '~> 2.7'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
-gem "net-smtp", "~> 0.3.1"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -35,11 +34,11 @@ group :development do
 end
 
 gem "atrea_control", "~> 2.1.0"
-gem 'symphonia', '~> 5.0'
+gem 'symphonia', '~> 5.0', '>= 5.0.1'
 source "https://gems.luk4s.cz" do
   gem 'symphonia_spec', group: %i[development test]
 end
 
 gem "active_record-pgcrypto", "~> 0.2.6"
-gem "oauth2", "~> 1.4"
 gem "influxdb-client", "~> 2.1"
+gem "oauth2", "~> 1.4"
