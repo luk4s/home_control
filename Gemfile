@@ -34,7 +34,7 @@ group :development do
 end
 
 gem "atrea_control", "~> 2.1.0"
-gem 'symphonia', '~> 5.0', '>= 5.0.1'
+gem 'symphonia', '~> 5.0', '>= 5.0.3'
 source "https://gems.luk4s.cz" do
   gem 'symphonia_spec', group: %i[development test]
 end
