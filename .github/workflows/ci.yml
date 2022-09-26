@@ -7,7 +7,7 @@ jobs:
     services:
       # https://github.com/actions/example-services/blob/master/.github/workflows/postgres-service.yml
       postgres:
-        image: postgres:12
+        image: postgres:14
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -34,7 +34,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 16
       # https://github.com/marketplace/actions/yarn-install-cache
       - name: Setup yarn cache
         uses: c-hive/gha-yarn-cache@v1
