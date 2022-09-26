@@ -43,7 +43,7 @@ jobs:
       - name: Create DB
         run: bundle exec rails db:setup
       - name: Precompile assets
-        run: bundle exec rails assets:precompile
+        run: bundle exec ./bin/webpack
       - uses: actions/upload-artifact@v3
         with:
           name: assets
