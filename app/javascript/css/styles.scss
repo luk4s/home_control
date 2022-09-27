@@ -1,0 +1,73 @@
+@import "~bootstrap/scss/bootstrap"; // @see https://rossta.net/blog/webpacker-with-bootstrap.html
+
+// @see https://stackoverflow.com/questions/55989717/rails-installing-font-awesome-in-rails-6-0-0-rc1-with-webpacker-and-yarn
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+
+
+body > .container {
+  padding-top: 80px;
+}
+
+@media print {
+  body > .container {
+    padding-top: 0 !important;
+  }
+}
+
+footer.footer {
+  height: 40px;
+  line-height: 40px;
+  bottom: 0;
+  width: 100%;
+}
+
+@keyframes highlight {
+  from {
+    background-color: map-get($theme-colors, warning);
+  }
+  to {
+    background-color: inherit;
+  }
+}
+
+@media print {
+  .contextual {
+    @extend .d-print-none;
+  }
+  a[href]:after {
+    content: none
+  }
+  .btn {
+    @extend .d-print-none;
+  }
+}
+@mixin inactive-row {
+  opacity: 0.5
+}
+td.price {
+  text-align: right;
+}
+table.table {
+  th a.asc {
+    &:after {
+      content: "\2191";
+    }
+  }
+  th a.desc {
+    &:after {
+      content: "\2193";
+    }
+  }
+  tr.status {
+    &--lock, &--inactive, &--archived {
+      @include inactive-row;
+    }
+  }
+  .buttons {
+    text-align: right;
+  }
+}
+.required label, label[required], label.required, .has-error {color: red !important;}
+.required label:after, label[required]:after, label.required:after { content: '* '}
