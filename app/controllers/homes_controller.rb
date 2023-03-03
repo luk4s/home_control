@@ -75,33 +75,16 @@ class HomesController < ApplicationController
     end
   end
 
-  def somfy_authorize
-    redirect_to @home.somfy.authorize(self)
-  end
-
-  def somfy
-    begin
-      response = @home.somfy.get_code(params.require(:code), self)
-      @home.update(somfy_token: response.token, somfy_refresh_token: response.refresh_token)
-      return render plain: "Somfy paired!"
-    rescue OAuth2::Error => e
-      flash[:error] = e.message
-    end
-
-    render :show
-  end
-
   private
 
   def entity_attributes
     duplex_attributes = %i[atrea_login atrea_password login_in_progress]
-    somfy_attributes = %i[somfy_client_id somfy_secret]
     influx_attributes = %i[influxdb_url influxdb_token influxdb_org influxdb_bucket]
-    params.require(:home).permit(*(duplex_attributes + somfy_attributes + influx_attributes))
+    params.require(:home).permit(*(duplex_attributes + influx_attributes))
   end
 
   def home
-    @home ||= current_user.home
+    @home ||= current_user.home || redirect_to(action: "new")
   end
 
 end

@@ -3,8 +3,8 @@
 
   <fieldset>
     <legend><%= t :legend_atrea %></legend>
-    <%= f.text_field :atrea_login, autocomplete: "off" %>
-    <%= f.password_field :atrea_password, autocomplete: "off" %>
+    <%= f.text_field :atrea_login, autocomplete: "off", required: true %>
+    <%= f.password_field :atrea_password, autocomplete: "off", required: true %>
   </fieldset>
   <details>
     <summary>InfluxDB connection</summary>

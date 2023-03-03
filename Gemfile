@@ -41,4 +41,3 @@ end
 
 gem "active_record-pgcrypto", "~> 0.2.6"
 gem "influxdb-client", "~> 2.1"
-gem "oauth2", "~> 1.4"

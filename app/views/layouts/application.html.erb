@@ -7,6 +7,8 @@
   <%= yield :meta_tags %>
   <%= stylesheet_pack_tag 'application', media: 'all' %>
   <%= yield :stylesheet_tags %>
+  <%= stylesheet_pack_tag 'css/styles' %>
+  <%= stylesheet_pack_tag 'bootstrap' %>
   <%= javascript_packs_with_chunks_tag 'application' %>
   <%= javascript_packs_with_chunks_tag 'bootstrap' %>
   <%= javascript_packs_with_chunks_tag 'controllers' %>
@@ -17,7 +19,7 @@
 <header data-turbolinks-permanent>
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <%= fa_icon('bars') %>
+      <%= icon('bars') %>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <%= render_menu(:top_menu) %>
