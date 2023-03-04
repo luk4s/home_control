@@ -35,9 +35,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-      # https://github.com/marketplace/actions/yarn-install-cache
-      - name: Setup yarn cache
-        uses: c-hive/gha-yarn-cache@v1
+          cache: 'yarn'
       - name: Install packages
         run: yarn install --pure-lockfile
       - name: Create DB
