@@ -33,7 +33,7 @@ group :development do
   gem 'spring'
 end
 
-gem "atrea_control", "~> 2.1.0"
+gem "atrea_control", "~> 2.1.3"
 gem 'symphonia', '~> 5.0', '>= 5.0.3'
 source "https://gems.luk4s.cz" do
   gem 'symphonia_spec', group: %i[development test]
