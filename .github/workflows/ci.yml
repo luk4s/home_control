@@ -21,7 +21,7 @@ jobs:
       DATABASE_HOST: localhost
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      NODE_OPTIONS: --openssl-legacy-provider
+#      NODE_OPTIONS: --openssl-legacy-provider
       # Rails verifies the time zone in DB is the same as the time zone of the Rails app
       TZ: "Europe/Prague"
     steps:
