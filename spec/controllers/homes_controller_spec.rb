@@ -11,7 +11,7 @@ RSpec.describe HomesController, type: :controller do
     end
 
     context "with home", logged: true do
-      let!(:home) { FactoryBot.create :my_home, user: controller.current_user }
+      before { FactoryBot.create :my_home, user: controller.current_user }
 
       it { is_expected.to have_http_status :ok }
     end

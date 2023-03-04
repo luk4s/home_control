@@ -3,7 +3,7 @@ require "atrea_duplex"
 class Home < ApplicationRecord
   include PgCryptoable
 
-  attr_pgcrypto :atrea_password, :somfy_client_id, :somfy_secret
+  attr_pgcrypto :atrea_password
   belongs_to :user, class_name: "Symphonia::User"
 
   store_accessor :duplex_auth_options, :user_id, :unit_id, :auth_token, :login_in_progress, :valid_for, prefix: :duplex
@@ -11,13 +11,11 @@ class Home < ApplicationRecord
 
   store_accessor :influxdb_options, :url, :token, :org, :bucket, prefix: :influxdb
 
+  validates :atrea_login, presence: true
+
   # @return [AtreaDuplex] with duplex sensor output
   def duplex
     @duplex ||= AtreaDuplex.new(self)
-  end
-
-  def somfy
-    @somfy ||= Somfy.new self
   end
 
   # @param [String] mode

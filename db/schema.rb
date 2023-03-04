@@ -20,14 +20,10 @@ ActiveRecord::Schema.define(version: 2021_12_25_114914) do
     t.bigint "user_id", null: false
     t.string "atrea_login"
     t.binary "atrea_password"
-    t.binary "somfy_client_id"
-    t.binary "somfy_secret"
-    t.string "somfy_refresh_token"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "influxdb_options"
     t.jsonb "duplex_auth_options"
-    t.string "somfy_token"
     t.jsonb "duplex_user_ctrl"
     t.index ["user_id"], name: "index_homes_on_user_id"
   end

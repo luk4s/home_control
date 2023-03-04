@@ -1,2 +1,0 @@
-class SomfyController < ApplicationController
-end

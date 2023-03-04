@@ -33,7 +33,7 @@ group :development do
   gem 'spring'
 end
 
-gem "atrea_control", "~> 2.1.0"
+gem "atrea_control", "~> 2.1.3"
 gem 'symphonia', '~> 5.0', '>= 5.0.3'
 source "https://gems.luk4s.cz" do
   gem 'symphonia_spec', group: %i[development test]
@@ -41,4 +41,3 @@ end
 
 gem "active_record-pgcrypto", "~> 0.2.6"
 gem "influxdb-client", "~> 2.1"
-gem "oauth2", "~> 1.4"
