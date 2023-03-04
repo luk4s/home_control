@@ -11,7 +11,7 @@ class Home < ApplicationRecord
 
   store_accessor :influxdb_options, :url, :token, :org, :bucket, prefix: :influxdb
 
-  validates :atrea_logings, presence: true
+  validates :atrea_login, :atrea_password, presence: true
 
   # @return [AtreaDuplex] with duplex sensor output
   def duplex

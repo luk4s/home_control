@@ -21,6 +21,7 @@ jobs:
       DATABASE_HOST: localhost
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      NODE_OPTIONS: --openssl-legacy-provider
       # Rails verifies the time zone in DB is the same as the time zone of the Rails app
       TZ: "Europe/Prague"
     steps:
@@ -34,7 +35,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
-          node-version: 16
+          node-version: 18
       # https://github.com/marketplace/actions/yarn-install-cache
       - name: Setup yarn cache
         uses: c-hive/gha-yarn-cache@v1
