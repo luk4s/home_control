@@ -2,7 +2,7 @@
   "name": "home-control",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.3.0",
+    "@fortawesome/fontawesome-free": "^6.4.0",
     "@rails/actioncable": "^6.1.6",
     "@rails/request.js": "^0.0.6",
     "@rails/ujs": "^6.1.6",
