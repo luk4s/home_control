@@ -3,7 +3,7 @@
     <div data-dashboard-target="cards">
       <div class="card mb-2">
         <div class="card-header">
-          <%= link_to "https://control.atrea.eu/comm/sw/user.php?sid=#{current_user.home.duplex_auth_token}&user=#{current_user.home.duplex_user_id}&unit=#{current_user.home.duplex_unit_id}&ver=003001009", target: "_blank", class: "float-right" do %>
+          <%= link_to "https://control.atrea.eu/comm/sw/user.php?sid=#{current_user.home.duplex_auth_token}&user=#{current_user.home.duplex_user_id}&unit=#{current_user.home.duplex_unit_id}&ver=003001009", target: "_blank", class: "float-end" do %>
             <%= image_tag "atrea.png", alt: "Atrea control" %>
           <% end %>
           <%= t :legend_atrea %>
