@@ -5,11 +5,12 @@
   <title><%= html_title %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= yield :meta_tags %>
-  <%= stylesheet_pack_tag 'application', media: 'all' %>
+  <%= vite_stylesheet_tag 'application', media: 'all' %>
   <%= yield :stylesheet_tags %>
-  <%= javascript_packs_with_chunks_tag 'application' %>
-  <%= javascript_packs_with_chunks_tag 'bootstrap' %>
-  <%= javascript_packs_with_chunks_tag 'controllers' %>
+  <%= vite_client_tag %>
+  <%= vite_javascript_tag 'application' %>
+  <%#= vite_javascript_tag 'bootstrap' %>
+  <%#= vite_javascript_tag 'controllers' %>
   <%= yield :javascript_tags %>
   <%= csrf_meta_tags %>
 </head>

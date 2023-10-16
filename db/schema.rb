@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_25_114914) do
-
+ActiveRecord::Schema[7.0].define(version: 2023_10_16_185453) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -20,8 +19,12 @@ ActiveRecord::Schema.define(version: 2021_12_25_114914) do
     t.bigint "user_id", null: false
     t.string "atrea_login"
     t.binary "atrea_password"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.binary "somfy_client_id"
+    t.binary "somfy_secret"
+    t.string "somfy_token"
+    t.string "somfy_refresh_token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.jsonb "influxdb_options"
     t.jsonb "duplex_auth_options"
     t.jsonb "duplex_user_ctrl"
@@ -33,8 +36,8 @@ ActiveRecord::Schema.define(version: 2021_12_25_114914) do
     t.string "value"
     t.string "type"
     t.boolean "restrict", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["name"], name: "index_preferences_on_name"
   end
 
@@ -50,8 +53,8 @@ ActiveRecord::Schema.define(version: 2021_12_25_114914) do
     t.string "name", null: false
     t.text "description"
     t.jsonb "permissions"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -69,20 +72,19 @@ ActiveRecord::Schema.define(version: 2021_12_25_114914) do
     t.string "perishable_token"
     t.integer "login_count", default: 0, null: false
     t.integer "failed_login_count", default: 0, null: false
-    t.datetime "last_request_at"
-    t.datetime "current_login_at"
-    t.datetime "last_login_at"
+    t.datetime "last_request_at", precision: nil
+    t.datetime "current_login_at", precision: nil
+    t.datetime "last_login_at", precision: nil
     t.string "current_login_ip"
     t.string "last_login_ip"
     t.bigint "edited_by_id"
-    t.datetime "edited_at"
+    t.datetime "edited_at", precision: nil
     t.bigint "role_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "external_id"
     t.uuid "uuid"
     t.string "avatar_url"
-    t.jsonb "influxdb_options"
     t.index ["edited_by_id"], name: "index_users_on_edited_by_id"
     t.index ["perishable_token"], name: "index_users_on_perishable_token", unique: true
     t.index ["persistence_token"], name: "index_users_on_persistence_token", unique: true
