@@ -1,5 +1,5 @@
 # Base image
-FROM ruby:3.1.2-slim-buster
+FROM ruby:3.2.2-slim-buster
 LABEL org.opencontainers.image.authors="pokorny@luk4s.cz"
 # Setup environment variables that will be available to the instance
 ENV RAILS_ROOT /app
@@ -22,7 +22,7 @@ RUN apt-get update -qq \
     /var/lib/dpkg \
     /var/lib/cache \
     /var/lib/log
-RUN gem install bundler --no-document --version 2.3.20
+RUN gem install bundler --no-document --version 2.4.16
 # Create a directory for our application
 # and set it as the working directory
 RUN mkdir -p $RAILS_ROOT
