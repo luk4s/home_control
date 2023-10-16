@@ -43,7 +43,7 @@ jobs:
       - name: Precompile assets
         env:
           NODE_OPTIONS: --openssl-legacy-provider
-        run: bundle exec ./bin/webpack
+        run: bundle exec rails assets:precompile
       - uses: actions/upload-artifact@v3
         with:
           name: assets
