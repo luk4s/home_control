@@ -75,6 +75,12 @@ class HomesController < ApplicationController
     end
   end
 
+  def reset
+    home.update duplex_auth_token: nil
+    ReadDuplexJob.perform_now(home)
+    redirect_to home
+  end
+
   private
 
   def entity_attributes

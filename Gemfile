@@ -36,7 +36,8 @@ group :development do
 end
 
 gem "atrea_control", "~> 2.2.0"
-gem 'symphonia', '~> 6.0.1'
+gem "symphonia", "~> 6.0.2"
+
 source "https://gems.luk4s.cz" do
   gem 'symphonia_spec', group: %i[development test]
 end
