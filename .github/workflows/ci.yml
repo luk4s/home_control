@@ -43,8 +43,9 @@ jobs:
       - name: Precompile assets
         env:
           NODE_OPTIONS: --openssl-legacy-provider
-          RAILS_ENV: production
-        run: bundle exec rails assets:precompile
+        run: |
+          bundle exec rails assets:precompile 
+          bundle exec rails vite:build RAILS_ENV=production
       - uses: actions/upload-artifact@v3
         with:
           name: assets
