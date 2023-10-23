@@ -20,3 +20,7 @@ cs:
   preheating:
     enable: Zapnuto
     disable: Vypnuto
+  heading_stuck: Zaseklé měření?
+  button_reset_session: Resetovat
+  text_stuck_message: aktuální připojení
+  text_stuck_confirm: Provede se opětovné přihlášení k duplexu. Operace může trvat až 5 minut

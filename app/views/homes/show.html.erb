@@ -3,7 +3,7 @@
     <div data-dashboard-target="cards">
       <div class="card mb-2">
         <div class="card-header">
-          <%= link_to "https://control.atrea.eu/comm/sw/user.php?sid=#{current_user.home.duplex_auth_token}&user=#{current_user.home.duplex_user_id}&unit=#{current_user.home.duplex_unit_id}&ver=003001009", target: "_blank", class: "float-right" do %>
+          <%= link_to "https://control.atrea.eu/comm/sw/user.php?sid=#{current_user.home.duplex_auth_token}&user=#{current_user.home.duplex_user_id}&unit=#{current_user.home.duplex_unit_id}&ver=003001009", target: "_blank", class: "float-end" do %>
             <%= image_tag "atrea.png", alt: "Atrea control" %>
           <% end %>
           <%= t :legend_atrea %>
@@ -33,7 +33,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card mb-2">
         <div class="card-header">
           <%= t :heading_temperature %>
         </div>
@@ -50,6 +50,22 @@
           </dl>
         </div>
       </div>
+
+      <div class="accordion">
+        <div class="accordion-item mb-2">
+          <div class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-stuck" aria-expanded="true" aria-controls="collapse-stuck">
+              <%= t(:heading_stuck) %>
+            </button>
+          </div>
+          <div id="collapse-stuck" class="accordion-collapse collapse">
+            <div class="accordion-body">
+              <%= link_to t(:button_reset_session), "#", class: "btn btn-danger btn-sm", data: { confirm: t(:text_stuck_confirm) } %>&nbsp;<%= t :text_stuck_message %>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 <% else %>

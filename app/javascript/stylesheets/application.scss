@@ -1,9 +1,8 @@
-@import "~bootstrap/scss/bootstrap"; // @see https://rossta.net/blog/webpacker-with-bootstrap.html
+@import "~bootstrap/scss/bootstrap.scss";
 
-// @see https://stackoverflow.com/questions/55989717/rails-installing-font-awesome-in-rails-6-0-0-rc1-with-webpacker-and-yarn
-$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
-@import "~@fortawesome/fontawesome-free/scss/fontawesome";
-@import "~@fortawesome/fontawesome-free/scss/solid";
+$fa-font-path: '@fortawesome/fontawesome-free/webfonts';
+@import "@fortawesome/fontawesome-free/scss/fontawesome";
+@import "@fortawesome/fontawesome-free/scss/solid";
 
 body > .container {
   padding-top: 80px;
