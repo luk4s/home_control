@@ -246,6 +246,8 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rdiscount (2.2.7.1)
+    redis (5.0.8)
+      redis-client (>= 0.17.0)
     redis-client (0.17.0)
       connection_pool
     regexp_parser (2.8.2)
@@ -395,6 +397,7 @@ DEPENDENCIES
   puma (~> 6.4)
   rack-mini-profiler (~> 2.0)
   rails (~> 7.0)
+  redis (~> 5.0)
   spring
   sprockets-rails
   symphonia (~> 6.0.2)
