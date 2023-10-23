@@ -45,13 +45,14 @@ jobs:
           NODE_OPTIONS: --openssl-legacy-provider
         run: |
           bundle exec rails assets:precompile 
-          bundle exec rails vite:build RAILS_ENV=production
+          bundle exec ./bin/vite build
       - uses: actions/upload-artifact@v3
         with:
           name: assets
           path: |
             public/assets
             public/packs
+            public/vite
           retention-days: 1
       - name: RSpec
         run: bundle exec rspec

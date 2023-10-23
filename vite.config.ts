@@ -8,8 +8,6 @@ export default defineConfig({
     }
   },
   plugins: [
-    ViteRails({
-      envVars: { RAILS_ENV: 'development' },
-    }),
+    ViteRails(),
   ],
 })
