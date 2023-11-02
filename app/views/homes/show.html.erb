@@ -1,73 +1,69 @@
-<% if current_user.home %>
-  <div data-controller="dashboard" data-dashboard-url-value="<%= home_path(format: "json") %>" data-dashboard-locales-value="<%= { confirm: t(:text_are_you_sure), disable_with: t(:text_send_to_unit) }.to_json %>" data-dashboard-controls-value="<%= atrea_controls.to_json %>">
-    <div data-dashboard-target="cards">
-      <div class="card mb-2">
-        <div class="card-header">
-          <%= link_to "https://control.atrea.eu/comm/sw/user.php?sid=#{current_user.home.duplex_auth_token}&user=#{current_user.home.duplex_user_id}&unit=#{current_user.home.duplex_unit_id}&ver=003001009", target: "_blank", class: "float-end" do %>
-            <%= image_tag "atrea.png", alt: "Atrea control" %>
-          <% end %>
-          <%= t :legend_atrea %>
-          <%= icon("spinner fa-spin 3x fw", t(:text_login_inprogress)) if current_user.home.duplex_login_in_progress %>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title"><%= t :text_current_power %></h5>
-          <h6 data-dashboard-target="currentMode" class="card-subtitle mb-2 text-muted"></h6>
-          <div class="progress">
-            <div data-dashboard-target="currentPowerProgressBar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-        </div>
-        <div class="card-footer" data-dashboard-target="ventilationControls">
-          <%= link_to icon("power-off", t("controls.poweroff")), scenario_home_path(scenario: "poweroff"), data: { action: "click->dashboard#scenario:prevent", scenario: "poweroff" }, class: "btn btn-danger" %>
-          <%= link_to icon("auto", t("controls.auto")), scenario_home_path(scenario: "auto"), data: { action: "click->dashboard#scenario:prevent", scenario: "auto" }, class: "btn btn-secondary" %>
-          <%= link_to icon("bullseye", t("controls.ventilate")), scenario_home_path(scenario: "manual", mode: current_user.home.duplex.control.user_ctrl.modes["2"]), data: { action: "click->dashboard#manualDialog:prevent", scenario: "manual" }, class: "btn btn-light" %>
-
-          <div id="manual_power_control" class="d-none">
-            <input type="range" id="power" name="power" min="20" max="90" value="0" data-dashboard-target="manualPowerSlider" class="form-control-range" data-action="change->dashboard#manualControl" list="tickmarks">
-            <datalist id="tickmarks">
-              <% (2..9).each do |tick| %>
-                <% value = tick * 10 %>
-                <option value="<%= value %>" label="<%= [2, 5, 9].include?(tick) ? "#{value}%" : nil %>"></option>
-              <% end %>
-            </datalist>
-          </div>
+<div data-controller="dashboard" data-dashboard-url-value="<%= home_path(format: "json") %>" data-dashboard-locales-value="<%= { confirm: t(:text_are_you_sure), disable_with: t(:text_send_to_unit) }.to_json %>" data-dashboard-controls-value="<%= atrea_controls.to_json %>">
+  <div data-dashboard-target="cards">
+    <div class="card mb-2">
+      <div class="card-header">
+        <%= link_to "https://control.atrea.eu/comm/sw/user.php?sid=#{current_user.home.duplex_auth_token}&user=#{current_user.home.duplex_user_id}&unit=#{current_user.home.duplex_unit_id}&ver=003001009", target: "_blank", class: "float-end" do %>
+          <%= image_tag "atrea.png", alt: "Atrea control" %>
+        <% end %>
+        <%= t :legend_atrea %>
+        <%= icon("spinner fa-spin 3x fw", t(:text_login_inprogress)) if current_user.home.duplex_login_in_progress %>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title"><%= t :text_current_power %></h5>
+        <h6 data-dashboard-target="currentMode" class="card-subtitle mb-2 text-muted"></h6>
+        <div class="progress">
+          <div data-dashboard-target="currentPowerProgressBar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
       </div>
+      <div class="card-footer" data-dashboard-target="ventilationControls">
+        <%= link_to icon("power-off", t("controls.poweroff")), scenario_home_path(scenario: "poweroff"), data: { action: "click->dashboard#scenario:prevent", scenario: "poweroff" }, class: "btn btn-danger" %>
+        <%= link_to icon("auto", t("controls.auto")), scenario_home_path(scenario: "auto"), data: { action: "click->dashboard#scenario:prevent", scenario: "auto" }, class: "btn btn-secondary" %>
+        <%= link_to icon("bullseye", t("controls.ventilate")), scenario_home_path(scenario: "manual", mode: current_user.home.duplex.control.user_ctrl.modes["2"]), data: { action: "click->dashboard#manualDialog:prevent", scenario: "manual" }, class: "btn btn-light" %>
 
-      <div class="card mb-2">
-        <div class="card-header">
-          <%= t :heading_temperature %>
-        </div>
-        <div class="card-body">
-          <dl class="row">
-            <dt class="col-sm-3">🌳&nbsp;<%= t :text_outdoor_temperature %></dt>
-            <dd class="col-sm-9" data-dashboard-target="outdoorTemperature"></dd>
-            <dt class="col-sm-3">🌬&nbsp;<%= t :text_input_temperature %></dt>
-            <dd class="col-sm-9" data-dashboard-target="inputTemperature"></dd>
-            <dt class="col-sm-3">🎛&nbsp;<%= t :text_preheat_temperature %></dt>
-            <dd class="col-sm-9" data-dashboard-target="preheatTemperature"></dd>
-            <dt class="col-sm-3">🌡&nbsp;<%= t :text_preheating %></dt>
-            <dd class="col-sm-9" data-dashboard-target="preheating" data-values="<%= t("preheating").to_json %>"></dd>
-          </dl>
+        <div id="manual_power_control" class="d-none">
+          <input type="range" id="power" name="power" min="20" max="90" value="0" data-dashboard-target="manualPowerSlider" class="form-control-range" data-action="change->dashboard#manualControl" list="tickmarks">
+          <datalist id="tickmarks">
+            <% (2..9).each do |tick| %>
+              <% value = tick * 10 %>
+              <option value="<%= value %>" label="<%= [2, 5, 9].include?(tick) ? "#{value}%" : nil %>"></option>
+            <% end %>
+          </datalist>
         </div>
       </div>
-
-      <div class="accordion">
-        <div class="accordion-item mb-2">
-          <div class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-stuck" aria-expanded="true" aria-controls="collapse-stuck">
-              <%= t(:heading_stuck) %>
-            </button>
-          </div>
-          <div id="collapse-stuck" class="accordion-collapse collapse">
-            <div class="accordion-body">
-              <%= link_to t(:button_reset_session), "#", class: "btn btn-danger btn-sm", data: { confirm: t(:text_stuck_confirm) } %>&nbsp;<%= t :text_stuck_message %>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
+
+    <div class="card mb-2">
+      <div class="card-header">
+        <%= t :heading_temperature %>
+      </div>
+      <div class="card-body">
+        <dl class="row">
+          <dt class="col-sm-3">🌳&nbsp;<%= t :text_outdoor_temperature %></dt>
+          <dd class="col-sm-9" data-dashboard-target="outdoorTemperature"></dd>
+          <dt class="col-sm-3">🌬&nbsp;<%= t :text_input_temperature %></dt>
+          <dd class="col-sm-9" data-dashboard-target="inputTemperature"></dd>
+          <dt class="col-sm-3">🎛&nbsp;<%= t :text_preheat_temperature %></dt>
+          <dd class="col-sm-9" data-dashboard-target="preheatTemperature"></dd>
+          <dt class="col-sm-3">🌡&nbsp;<%= t :text_preheating %></dt>
+          <dd class="col-sm-9" data-dashboard-target="preheating" data-values="<%= t("preheating").to_json %>"></dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-item mb-2">
+        <div class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-stuck" aria-expanded="true" aria-controls="collapse-stuck">
+            <%= t(:heading_stuck) %>
+          </button>
+        </div>
+        <div id="collapse-stuck" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <%= link_to t(:button_reset_session), reset_home_path, class: "btn btn-danger btn-sm", data: { confirm: t(:text_stuck_confirm), method: :delete } %>&nbsp;<%= t :text_stuck_message %>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
-<% else %>
-  <%= render template: "new" %>
-<% end %>
+</div>

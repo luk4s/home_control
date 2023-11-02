@@ -4,10 +4,24 @@ class HomesController < ApplicationController
 
   skip_forgery_protection if: -> { request.format.json? }, only: %i[scenario]
 
+  def show
+    return redirect_to new_home_path unless home
+
+    ReadDuplexJob.perform_later(home)
+    respond_to do |format|
+      format.html
+      format.json { render json: home.duplex }
+    end
+  end
+
   def new
     raise ArgumentError, "you already have a home!" if current_user.home
 
     @home = current_user.build_home
+  end
+
+  def edit
+    # render "edit"
   end
 
   def create
@@ -21,18 +35,6 @@ class HomesController < ApplicationController
     end
   end
 
-  def show
-    return redirect_to new_home_path unless home
-
-    ReadDuplexJob.perform_later(home)
-    respond_to do |format|
-      format.html
-      format.json { render json: home.duplex }
-    end
-  end
-
-  def edit; end
-
   def history
     return render_404 if (influxdb = Rails.application.credentials[:influxdb]).blank?
 
@@ -41,13 +43,15 @@ class HomesController < ApplicationController
     }.reverse_merge(influxdb))
     query_api = client.create_query_api
     query = "from(bucket: \"home.luk4s.cz\") |> range(start: -6h, stop: now()) " \
-      "|> filter(fn: (r) => r._measurement == \"#{home.influxdb_id}\")" \
-      "|> filter(fn: (r) => r._field == \"power\")" \
-      "|> group(columns: [\"_field\"])" \
-      "|> aggregateWindow(every: 1m, fn: last, createEmpty: false)" \
-      "|> yield(name: \"last\")"
+            "|> filter(fn: (r) => r._measurement == \"#{home.influxdb_id}\")" \
+            "|> filter(fn: (r) => r._field == \"power\")" \
+            "|> group(columns: [\"_field\"])" \
+            "|> aggregateWindow(every: 1m, fn: last, createEmpty: false)" \
+            "|> yield(name: \"last\")"
     result = query_api.query(query: query)
-    @data = result.values.flatten.map(&:records).flatten.sort_by(&:time).collect { |i| { x: Time.zone.parse(i.time).strftime("%H:%M"), y: i.value } }
+    @data = result.values.flatten.map(&:records).flatten.sort_by(&:time).collect do |i|
+      { x: Time.zone.parse(i.time).strftime("%H:%M"), y: i.value }
+    end
     render json: @data
   end
 

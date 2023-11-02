@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resource :home do
     patch "scenario/:scenario", to: "homes#scenario", as: "scenario"
-    get "reset"
+    delete "reset"
     # get "history.json", to: "homes#history"
     # get "somfy"
     # get "somfy/authorize", to: "homes#somfy_authorize"
