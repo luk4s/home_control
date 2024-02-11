@@ -75,7 +75,7 @@ jobs:
       - run: docker run --network host --rm --env-file .env.test --entrypoint '' "${{ needs.build.outputs.IMAGE_REGISTRY }}:${{ needs.build.outputs.IMAGE_TAG }}" bundle exec rspec
   deploy:
     runs-on: ubuntu-latest
-    needs: "test"
+    needs:  [ build, test ]
     if: success() && github.ref == 'refs/heads/master'
     steps:
       - name: Login to DockerHub
