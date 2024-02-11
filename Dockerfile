@@ -37,6 +37,11 @@ ENV RAILS_ENV "production"
 COPY --from=assets /app .
 RUN ln -s "${RAILS_ROOT}/bin/geckodriver" /usr/local/bin/
 
+RUN useradd rails --create-home --shell /bin/bash && \
+    mkdir -p db log storage tmp coverage && \
+    chown -R rails:rails db log storage tmp coverage
+USER rails:rails
+
 EXPOSE 3000/tcp
 ENTRYPOINT ["./bin/docker-entrypoint.sh"]
 CMD ["start"]
