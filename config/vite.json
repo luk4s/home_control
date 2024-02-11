@@ -1,11 +1,11 @@
 {
   "all": {
     "sourceCodeDir": "app/javascript",
+    "publicOutputDir": "vite",
     "watchAdditionalPaths": []
   },
   "development": {
     "autoBuild": true,
-    "publicOutputDir": "vite-dev",
     "port": 3036
   },
   "test": {
