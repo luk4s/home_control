@@ -22,7 +22,7 @@ RUN apt-get update -qq \
     /var/lib/dpkg \
     /var/lib/cache \
     /var/lib/log
-RUN gem install bundler --no-document --version 2.4.16
+RUN gem install bundler --no-document --version 2.5.6
 # Create a directory for our application
 # and set it as the working directory
 RUN mkdir -p $RAILS_ROOT
@@ -31,7 +31,6 @@ WORKDIR $RAILS_ROOT
 # and install gems
 COPY Gemfile* ./
 RUN bundle config set deployment 'true' && \
-    bundle config set without 'development test' && \
     bundle install --jobs $(nproc) --retry 5
 # Copy over our application code
 COPY . .

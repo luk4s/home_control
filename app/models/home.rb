@@ -3,7 +3,11 @@ require "atrea_duplex"
 class Home < ApplicationRecord
   include PgCryptoable
 
-  attr_pgcrypto :atrea_password
+  define_singleton_method(:decrypted_atrea_password) do
+    ActiveRecord::PGCrypto::SymmetricCoder.decrypted_arel_text(arel_table[:atrea_password])
+  end
+  serialize :atrea_password, coder: ActiveRecord::PGCrypto::SymmetricCoder
+
   belongs_to :user, class_name: "Symphonia::User"
 
   store_accessor :duplex_auth_options, :user_id, :unit_id, :auth_token, :login_in_progress, :valid_for, prefix: :duplex

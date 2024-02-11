@@ -1,2 +1,5 @@
 inherit_gem:
-  symphonia: .rubocop.yml
+  easy_style: default.yml
+
+AllCops:
+  TargetRubyVersion: 3.2
