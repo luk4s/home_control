@@ -22,8 +22,8 @@ Turbo.start()
 // // Import all channels.
 // const channels = import.meta.globEager('./**/*_channel.js')
 // const controllers = import.meta.globEager('./**/*_controller.js')
-import "../channels/index"
 import "../controllers/index"
+import "../channels/index"
 
 import Rails from "@rails/ujs";
 Rails.start();

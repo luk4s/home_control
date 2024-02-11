@@ -48,4 +48,5 @@ end
 gem "active_record-pgcrypto", "~> 0.2.6"
 gem "influxdb-client", "~> 3.0"
 
+gem "nokogiri", "~> 1.16", force_ruby_platform: true
 gem "vite_rails", "~> 3.0"
