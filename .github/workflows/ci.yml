@@ -15,14 +15,14 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: luk4s
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Get output
         id: build-variables
         run: |
           APP_VERSION=$(head ./version)
           echo "APP_VERSION=$APP_VERSION" >> "$GITHUB_OUTPUT"
-          echo "IMAGE_REGISTRY=luk4s/home_control" >> "$GITHUB_OUTPUT"
+          echo "IMAGE_REGISTRY=${{vars.IMAGE_REGISTRY}}" >> "$GITHUB_OUTPUT"
           echo "IMAGE_TAG=${{github.ref_name}}" >> "$GITHUB_OUTPUT"
       - name: Build and push
         id: docker_build
@@ -59,7 +59,7 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: luk4s
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Checkout code
         uses: actions/checkout@v4
@@ -71,8 +71,8 @@ jobs:
           echo "RAILS_ENV=test" >> .env.test
           echo "RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}" >> .env.test
           echo "VITE_RUBY_AUTO_BUILD=false" >> .env.test
-      - run: docker run --network host --rm --env-file .env.test --entrypoint '' "luk4s/home_control:${{ needs.build.outputs.IMAGE_TAG }}" bundle exec rails db:test:prepare
-      - run: docker run --network host --rm --env-file .env.test --entrypoint '' "luk4s/home_control:${{ needs.build.outputs.IMAGE_TAG }}" bundle exec rspec
+      - run: docker run --network host --rm --env-file .env.test --entrypoint '' "${{ needs.build.outputs.IMAGE_REGISTRY }}:${{ needs.build.outputs.IMAGE_TAG }}" bundle exec rails db:test:prepare
+      - run: docker run --network host --rm --env-file .env.test --entrypoint '' "${{ needs.build.outputs.IMAGE_REGISTRY }}:${{ needs.build.outputs.IMAGE_TAG }}" bundle exec rspec
   deploy:
     runs-on: ubuntu-latest
     needs: "test"
@@ -81,12 +81,12 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: luk4s
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Aliases image
         run: |
-          docker pull luk4s/home_control:${{ needs.build.outputs.IMAGE_TAG }}
-          docker tag luk4s/home_control:${{ needs.build.outputs.IMAGE_TAG }} luk4s/home_control:${{ needs.build.outputs.APP_VERSION }}
-          docker tag luk4s/home_control:${{ needs.build.outputs.IMAGE_TAG }} luk4s/home_control:latest
-          docker push luk4s/home_control:${{ needs.build.outputs.APP_VERSION }}
-          docker push luk4s/home_control:latest
+          docker pull "${{ needs.build.outputs.IMAGE_REGISTRY }}:${{ needs.build.outputs.IMAGE_TAG }}"
+          docker tag "${{ needs.build.outputs.IMAGE_REGISTRY }}:${{ needs.build.outputs.IMAGE_TAG }}" "${{ needs.build.outputs.IMAGE_REGISTRY }}:${{ needs.build.outputs.APP_VERSION }}"
+          docker tag "${{ needs.build.outputs.IMAGE_REGISTRY }}:${{ needs.build.outputs.IMAGE_TAG }}" "${{ needs.build.outputs.IMAGE_REGISTRY }}:latest"
+          docker push "${{ needs.build.outputs.IMAGE_REGISTRY }}:${{ needs.build.outputs.APP_VERSION }}"
+          docker push "${{ needs.build.outputs.IMAGE_REGISTRY }}:latest"
