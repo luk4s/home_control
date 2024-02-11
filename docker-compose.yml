@@ -14,9 +14,6 @@ services:
   app:
     build: .
     image: my_home_control
-    restart: on-failure
-    volumes:
-      - gem_cache:/usr/local/bundle/gems
     ports:
       - 3000:3000
     env_file: .env
@@ -31,7 +28,6 @@ services:
   sidekiq:
     image: my_home_control
     env_file: .env
-    restart: on-failure
     environment:
       REDIS_URL: redis://redis:6379/1
       RAILS_ENV: production
