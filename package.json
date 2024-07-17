@@ -2,7 +2,7 @@
   "name": "home-control",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.5.1",
+    "@fortawesome/fontawesome-free": "^6.6.0",
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo": "^8.0",
     "@popperjs/core": "^2.11.8",
