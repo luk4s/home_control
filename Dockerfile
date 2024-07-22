@@ -1,11 +1,11 @@
 # Base image
-FROM ruby:3.2.2-slim-buster as base
+FROM ruby:3.2.2-slim-bookworm as base
 LABEL org.opencontainers.image.authors="pokorny@luk4s.cz"
 # Setup environment variables that will be available to the instance
 ENV RAILS_ROOT /app
 # Installation of dependencies
-RUN apt-get update -qq \
-  && apt-get install -y vim curl firefox-esr \
+RUN apt update -qq \
+  && apt install -y vim curl firefox-esr \
 # Needed for certain gems
     build-essential \
 # Needed for postgres gem
@@ -13,8 +13,8 @@ RUN apt-get update -qq \
 # https://github.com/mimemagicrb/mimemagic
     shared-mime-info \
 # The following are used to trim down the size of the image by removing unneeded data
-  && apt-get clean autoclean \
-  && apt-get autoremove -y
+  && apt clean autoclean \
+  && apt autoremove -y
 RUN gem install bundler --no-document --version 2.5.6
 # Create a directory for our application
 # and set it as the working directory
@@ -25,16 +25,21 @@ COPY Gemfile* ./
 RUN bundle config set deployment 'true' && \
     bundle install --jobs $(nproc) --retry 5
 
+#FROM node:lts-bookworm-slim as nodejs
+#RUN corepack enable && yarn set version "${NODE_YARN_VERSION}"
 FROM base as assets
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
-RUN apt-get update && apt-get install -y nodejs
+COPY --from=node:lts-bookworm-slim /usr/local/bin /usr/local/bin
+COPY --from=node:lts-bookworm-slim /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node:lts-bookworm-slim /usr/local/bin/yarn /usr/local/bin/yarn
+COPY --from=node:lts-bookworm-slim /opt /opt
 # Copy over our application code
 COPY . .
 RUN bundle exec rails assets:precompile
 
 FROM base
 ENV RAILS_ENV "production"
-COPY --from=assets /app .
+COPY . .
+COPY --from=assets /app/public /app/public
 RUN ln -s "${RAILS_ROOT}/bin/geckodriver" /usr/local/bin/
 
 RUN useradd rails --create-home --shell /bin/bash && \
