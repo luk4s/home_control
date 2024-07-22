@@ -48,7 +48,7 @@ class HomesController < ApplicationController
             "|> group(columns: [\"_field\"])" \
             "|> aggregateWindow(every: 1m, fn: last, createEmpty: false)" \
             "|> yield(name: \"last\")"
-    result = query_api.query(query: query)
+    result = query_api.query(query:)
     @data = result.values.flatten.map(&:records).flatten.sort_by(&:time).collect do |i|
       { x: Time.zone.parse(i.time).strftime("%H:%M"), y: i.value }
     end

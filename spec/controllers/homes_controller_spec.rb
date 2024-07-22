@@ -6,18 +6,18 @@ RSpec.describe HomesController, type: :controller do
       it { is_expected.to redirect_to "/login" }
     end
 
-    context "without home", logged: true do
+    context "without home", :logged do
       it { is_expected.to redirect_to "/home/new" }
     end
 
-    context "with home", logged: true do
+    context "with home", :logged do
       before { FactoryBot.create :my_home, user: controller.current_user }
 
       it { is_expected.to have_http_status :ok }
     end
   end
 
-  describe "#update", logged: true do
+  describe "#update", :logged do
     let!(:home) { FactoryBot.create :my_home, user: controller.current_user }
 
     it "permitted params" do
@@ -25,7 +25,7 @@ RSpec.describe HomesController, type: :controller do
     end
   end
 
-  describe "#reset", logged: true do
+  describe "#reset", :logged do
     subject(:reset) { get :reset, params: { id: home } }
 
     let(:home) { FactoryBot.create :my_home, user: controller.current_user, duplex_auth_options: { user_id: 1, unit_id: "0123", auth_token: "abc20" } }
@@ -40,5 +40,4 @@ RSpec.describe HomesController, type: :controller do
       expect { reset }.to change { home.reload.duplex_auth_token }.to nil
     end
   end
-
 end

@@ -6,7 +6,7 @@ module PgCryptoable
   class_methods do
     def attr_pgcrypto(*attributes)
       attributes.each do |attribute|
-        define_singleton_method("decrypted_#{attribute}".to_sym) do
+        define_singleton_method(:"decrypted_#{attribute}") do
           ActiveRecord::PGCrypto::SymmetricCoder
             .decrypted_arel_text(arel_table[attribute])
         end
@@ -15,4 +15,5 @@ module PgCryptoable
       end
     end
   end
+
 end

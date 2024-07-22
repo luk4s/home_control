@@ -1,7 +1,7 @@
 class CreateHomes < ActiveRecord::Migration[6.1]
 
   def change
-    enable_extension 'pgcrypto'
+    enable_extension "pgcrypto"
 
     create_table :homes do |t|
       t.belongs_to :user, null: false, foreign_key: true

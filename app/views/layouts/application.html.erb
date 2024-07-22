@@ -5,15 +5,15 @@
   <title><%= html_title %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= yield :meta_tags %>
-  <%= vite_stylesheet_tag "application", media: "all" %>
+  <%= vite_stylesheet_tag "application", media: "all", data: { "turbo-track" => "reload" } %>
   <%= yield :stylesheet_tags %>
   <%= vite_client_tag %>
-  <%= vite_javascript_tag "application" %>
+  <%= vite_javascript_tag "application", data: { "turbo-track" => "reload" } %>
   <%= yield :javascript_tags %>
   <%= csrf_meta_tags %>
 </head>
 <body class="controller-<%= controller_name %> action-<%= action_name %>" data-menu-item="<%= @menu_item.to_s %>">
-<header data-turbolinks-permanent>
+<header data-turbo-permanent>
   <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <%= icon("bars") %>
@@ -31,17 +31,17 @@
 
 <div id="ajax-indicator" style="display:none"><i class="fa fa-spinner fa-spin fa-large"></i></div>
 <script type="application/javascript">
-    document.addEventListener("DOMContentLoaded", () => {
-        const isDarkMode = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  document.addEventListener("DOMContentLoaded", () => {
+    const isDarkMode = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-        // Set the `data-bs-theme` attribute based on the dark mode status
-        document.documentElement.setAttribute("data-bs-theme", isDarkMode ? "dark" : "light");
+    // Set the `data-bs-theme` attribute based on the dark mode status
+    document.documentElement.setAttribute("data-bs-theme", isDarkMode ? "dark" : "light");
 
-        // Optional: Listen for changes in the color scheme preference and update the attribute accordingly
-        window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", event => {
-            document.documentElement.setAttribute("data-bs-theme", event.matches ? "dark" : "light");
-        });
+    // Optional: Listen for changes in the color scheme preference and update the attribute accordingly
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", event => {
+      document.documentElement.setAttribute("data-bs-theme", event.matches ? "dark" : "light");
     });
+  });
 </script>
 </body>
 </html>

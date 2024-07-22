@@ -1,5 +1,4 @@
 class AtreaDuplex
-
   attr_reader :home
 
   def initialize(home)

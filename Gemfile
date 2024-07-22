@@ -9,8 +9,6 @@ gem "rails", "~> 7.1"
 gem "pg", "~> 1.5.4"
 # Use Puma as the app server
 gem "puma", "~> 6.4"
-# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-# gem "webpacker", "~> 5.0"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem "jbuilder", "~> 2.7"
 
@@ -22,7 +20,6 @@ gem "redis", "~> 5.0"
 gem "sprockets-rails"
 
 group :development, :test do
-  gem "easy_style"
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
   gem "pry-rails"
 end
@@ -50,3 +47,5 @@ gem "influxdb-client", "~> 3.0"
 
 gem "nokogiri", "~> 1.16", force_ruby_platform: true
 gem "vite_rails", "~> 3.0"
+
+gem "newrelic_rpm", "~> 9.11"
