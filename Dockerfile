@@ -25,22 +25,18 @@ COPY Gemfile* ./
 RUN bundle config set deployment 'true' && \
     bundle install --jobs $(nproc) --retry 5
 
-#FROM node:lts-bookworm-slim as nodejs
-#RUN corepack enable && yarn set version "${NODE_YARN_VERSION}"
 FROM base as assets
-COPY --from=node:lts-bookworm-slim /usr/local/bin /usr/local/bin
-COPY --from=node:lts-bookworm-slim /usr/local/lib/node_modules /usr/local/lib/node_modules
-COPY --from=node:lts-bookworm-slim /usr/local/bin/yarn /usr/local/bin/yarn
-COPY --from=node:lts-bookworm-slim /opt /opt
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+RUN apt update && apt install -y nodejs && corepack enable
 # Copy over our application code
 COPY . .
 RUN bundle exec rails assets:precompile
 
 FROM base
 ENV RAILS_ENV "production"
+RUN ln -s "${RAILS_ROOT}/bin/geckodriver" /usr/local/bin/
 COPY . .
 COPY --from=assets /app/public /app/public
-RUN ln -s "${RAILS_ROOT}/bin/geckodriver" /usr/local/bin/
 
 RUN useradd rails --create-home --shell /bin/bash && \
     mkdir -p db log storage tmp coverage && \
