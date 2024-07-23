@@ -9,3 +9,10 @@ config/master.key
 config/credentials/*.key
 .github
 storage
+node_modules
+.yarn*
+public/packs
+public/packs-test
+public/assets
+public/vite
+public/vite-dev

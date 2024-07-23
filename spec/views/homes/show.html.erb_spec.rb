@@ -1,5 +1,4 @@
-RSpec.describe "homes/show", logged: true do
-
+RSpec.describe "homes/show", :logged do
   helper_method :current_user
 
   before do

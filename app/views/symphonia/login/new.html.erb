@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-md-6 col-xs-12 mx-auto">
+    <div class="card w-75 mx-auto">
+      <div class="card-body">
+        <%= symphonia_form_for(@model_session, as: :login_session, html: { id: "login-form", data: { turbo: false } }) do |f| %>
+          <%= render("form", f: f) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,9 @@
-<div data-controller="dashboard" data-dashboard-url-value="<%= home_path(format: "json") %>" data-dashboard-locales-value="<%= { confirm: t(:text_are_you_sure), disable_with: t(:text_send_to_unit) }.to_json %>" data-dashboard-controls-value="<%= atrea_controls.to_json %>">
+<div
+  data-turbo-track="reload"
+  data-controller="dashboard"
+  data-dashboard-url-value="<%= home_path(format: "json") %>"
+  data-dashboard-locales-value="<%= { confirm: t(:text_are_you_sure), disable_with: t(:text_send_to_unit) }.to_json %>"
+  data-dashboard-controls-value="<%= atrea_controls.to_json %>">
   <div data-dashboard-target="cards">
     <div class="card mb-2">
       <div class="card-header">
@@ -67,3 +72,6 @@
 
   </div>
 </div>
+<% content_for :meta_tag do %>
+  <meta name="turbo-visit-control" content="reload">
+<% end %>

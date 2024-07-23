@@ -11,9 +11,8 @@ Sidekiq.configure_server do |config|
   #   Sidekiq::Cron::Job.load_from_hash YAML.load_file(schedule_file)
   # end
   Rails.application.reloader.to_prepare do
-    Sidekiq::Cron::Job.create(name: 'Read data from duplex - every 1min', cron: '*/1 * * * *', class: 'DuplexCronJob')
+    Sidekiq::Cron::Job.create(name: "Read data from duplex - every 1min", cron: "*/1 * * * *", class: "DuplexCronJob")
   end
-
 end
 
 Sidekiq.configure_client do |config|
