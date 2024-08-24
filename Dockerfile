@@ -15,7 +15,7 @@ RUN apt update -qq \
 # The following are used to trim down the size of the image by removing unneeded data
   && apt clean autoclean \
   && apt autoremove -y
-RUN gem install bundler --no-document --version 2.5.6
+RUN gem install bundler --no-document --version 2.5.17
 # Create a directory for our application
 # and set it as the working directory
 WORKDIR "${RAILS_ROOT}"
