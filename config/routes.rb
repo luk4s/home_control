@@ -10,4 +10,7 @@ Rails.application.routes.draw do
     # get "somfy"
     # get "somfy/authorize", to: "homes#somfy_authorize"
   end
+
+  # get "/up", to: proc { [200, {}, %w[ok]] }
+  get "up" => "rails/health#show", as: :rails_health_check
 end
