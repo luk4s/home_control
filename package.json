@@ -7,7 +7,7 @@
     "@hotwired/turbo": "^8.0",
     "@popperjs/core": "^2.11.8",
     "@rails/actioncable": "^7.1.2",
-    "@rails/request.js": "^0.0.9",
+    "@rails/request.js": "^0.0.11",
     "@rails/ujs": "^7.1.2",
     "@rails/webpacker": "^5.4.4",
     "bootstrap": "^5.3.3",
