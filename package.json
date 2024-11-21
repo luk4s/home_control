@@ -8,7 +8,7 @@
     "@popperjs/core": "^2.11.8",
     "@rails/actioncable": "^7.1.2",
     "@rails/request.js": "^0.0.9",
-    "@rails/ujs": "^7.1.2",
+    "@rails/ujs": "^7.1.500",
     "@rails/webpacker": "^5.4.4",
     "bootstrap": "^5.3.3",
     "stimulus-vite-helpers": "^3.0.1",
