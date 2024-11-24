@@ -1,5 +1,5 @@
 # Base image
-FROM ruby:3.3.4-slim-bookworm as base
+FROM ruby:3.3.6-slim-bookworm as base
 LABEL org.opencontainers.image.authors="pokorny@luk4s.cz"
 # Setup environment variables that will be available to the instance
 ENV RAILS_ROOT /app
