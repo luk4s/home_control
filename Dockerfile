@@ -2,7 +2,7 @@
 FROM ruby:3.3.4-slim-bookworm AS base
 LABEL org.opencontainers.image.authors="pokorny@luk4s.cz"
 # Setup environment variables that will be available to the instance
-ENV RAILS_ROOT /app
+ENV RAILS_ROOT=/app
 # Installation of dependencies
 RUN apt update -qq \
   && apt install -y vim curl firefox-esr \
@@ -27,13 +27,17 @@ RUN bundle config set deployment 'true' && \
 
 FROM base AS assets
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-RUN apt update && apt install -y nodejs && corepack enable
+RUN apt update && \
+    apt install -y nodejs && \
+    corepack enable && \ 
+    yarn set version classic
+
 # Copy over our application code
 COPY . .
 RUN bundle exec rails assets:precompile
 
 FROM base
-ENV RAILS_ENV "production"
+ENV RAILS_ENV="production"
 RUN ln -s "${RAILS_ROOT}/bin/geckodriver" /usr/local/bin/
 COPY . .
 COPY --from=assets /app/public /app/public
