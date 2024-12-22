@@ -49,3 +49,5 @@ gem "nokogiri", "~> 1.16", force_ruby_platform: true
 gem "vite_rails", "~> 3.0"
 
 gem "newrelic_rpm", "~> 9.11"
+
+gem "exception_notification", "~> 4.5"
