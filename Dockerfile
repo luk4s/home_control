@@ -1,5 +1,5 @@
 # Base image
-FROM ruby:3.3.4-slim-bookworm as base
+FROM ruby:3.3.4-slim-bookworm AS base
 LABEL org.opencontainers.image.authors="pokorny@luk4s.cz"
 # Setup environment variables that will be available to the instance
 ENV RAILS_ROOT /app
@@ -23,9 +23,9 @@ WORKDIR "${RAILS_ROOT}"
 # and install gems
 COPY Gemfile* ./
 RUN bundle config set deployment 'true' && \
-    bundle install --jobs $(nproc) --retry 5
+    bundle install --no-cache --jobs $(nproc) --retry 5
 
-FROM base as assets
+FROM base AS assets
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 RUN apt update && apt install -y nodejs && corepack enable
 # Copy over our application code
