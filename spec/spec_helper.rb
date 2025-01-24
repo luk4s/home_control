@@ -19,4 +19,7 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
   config.profile_examples = true
+
+  ActiveJob::Uniqueness.test_mode!
+  ActiveJob::Base.queue_adapter = :test
 end

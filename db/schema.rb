@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_16_185453) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_24_203956) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -28,6 +28,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_16_185453) do
     t.jsonb "influxdb_options"
     t.jsonb "duplex_auth_options"
     t.jsonb "duplex_user_ctrl"
+    t.string "status", default: "pending", null: false
+    t.index ["status"], name: "index_homes_on_status"
     t.index ["user_id"], name: "index_homes_on_user_id"
   end
 
