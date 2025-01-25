@@ -7,7 +7,7 @@ RSpec.describe Home do
     it { is_expected.to eq [] }
 
     context "with active home" do
-      let!(:active_home) { create :my_home, status: "pending" }
+      let!(:active_home) { create :my_home, status: "pending", atrea_password: Faker::Internet.password, atrea_login: Faker::Superhero.name }
 
       it { is_expected.to eq [active_home] }
     end
