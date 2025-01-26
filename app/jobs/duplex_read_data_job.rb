@@ -1,14 +1,15 @@
-class ReadDuplexJob < ApplicationJob
+class DuplexReadDataJob < ApplicationJob
   queue_as :default
 
-  discard_on StandardError do |_job, error|
-    logger.error error
+  unique :until_executed, on_conflict: :log
+
+  retry_on AtreaControl::Error, wait: 5.seconds, attempts: 3 do |job, exception|
+    job.logger.error "Error reading data from RD5: #{exception.message}"
+    job.arguments.first.status_failed!
   end
 
   # @param [Home] home
   def perform(home)
-    # If another process current logging into RD5, die
-    return if home.duplex_login_in_progress
     return unless (data = home.duplex.data)
 
     DuplexChannel.broadcast_to(home.user, data)

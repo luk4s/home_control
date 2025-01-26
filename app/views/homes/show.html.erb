@@ -11,7 +11,7 @@
           <%= image_tag "atrea.png", alt: "Atrea control" %>
         <% end %>
         <%= t :legend_atrea %>
-        <%= icon("spinner fa-spin 3x fw", t(:text_login_inprogress)) if current_user.home.duplex_login_in_progress %>
+        <%= icon("spinner fa-spin 3x fw", t(:text_login_inprogress)) if current_user.home.status_login_in_progress? %>
       </div>
       <div class="card-body">
         <h5 class="card-title"><%= t :text_current_power %></h5>

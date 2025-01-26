@@ -43,15 +43,14 @@ jobs:
       # Rails verifies the time zone in DB is the same as the time zone of the Rails app
       TZ: "Europe/Prague"
     services:
-      # https://github.com/actions/example-services/blob/master/.github/workflows/postgres-service.yml
       postgres:
-        image: postgres:16
+        image: postgres:16-alpine
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: postgres
         ports:
-          - 5432:5432
+          - "5432:5432"
         # needed because the postgres container does not provide a healthcheck
         # tmpfs makes DB faster by using RAM
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5

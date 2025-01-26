@@ -12,5 +12,5 @@ Rails.application.routes.draw do
   end
 
   # get "/up", to: proc { [200, {}, %w[ok]] }
-  get "up" => "rails/health#show", as: :rails_health_check
+  get "up" => "rails/health#show", :as => :rails_health_check
 end

@@ -7,7 +7,7 @@ class HomesController < ApplicationController
   def show
     return redirect_to new_home_path unless home
 
-    ReadDuplexJob.perform_later(home)
+    DuplexReadDataJob.perform_later(home)
     respond_to do |format|
       format.html
       format.json { render json: home.duplex }
@@ -35,31 +35,31 @@ class HomesController < ApplicationController
     end
   end
 
-  def history
-    return render_404 if (influxdb = Rails.application.credentials[:influxdb]).blank?
-
-    client = InfluxDB2::Client.new(influxdb[:url], influxdb[:token], {
-      precision: InfluxDB2::WritePrecision::SECOND,
-    }.reverse_merge(influxdb))
-    query_api = client.create_query_api
-    query = "from(bucket: \"home.luk4s.cz\") |> range(start: -6h, stop: now()) " \
-            "|> filter(fn: (r) => r._measurement == \"#{home.influxdb_id}\")" \
-            "|> filter(fn: (r) => r._field == \"power\")" \
-            "|> group(columns: [\"_field\"])" \
-            "|> aggregateWindow(every: 1m, fn: last, createEmpty: false)" \
-            "|> yield(name: \"last\")"
-    result = query_api.query(query:)
-    @data = result.values.flatten.map(&:records).flatten.sort_by(&:time).collect do |i|
-      { x: Time.zone.parse(i.time).strftime("%H:%M"), y: i.value }
-    end
-    render json: @data
-  end
+  # def history
+  #   return render_404 if (influxdb = Rails.application.credentials[:influxdb]).blank?
+  #
+  #   client = InfluxDB2::Client.new(influxdb[:url], influxdb[:token], {
+  #     precision: InfluxDB2::WritePrecision::SECOND,
+  #   }.reverse_merge(influxdb))
+  #   query_api = client.create_query_api
+  #   query = "from(bucket: \"home.luk4s.cz\") |> range(start: -6h, stop: now()) " \
+  #           "|> filter(fn: (r) => r._measurement == \"#{home.influxdb_id}\")" \
+  #           "|> filter(fn: (r) => r._field == \"power\")" \
+  #           "|> group(columns: [\"_field\"])" \
+  #           "|> aggregateWindow(every: 1m, fn: last, createEmpty: false)" \
+  #           "|> yield(name: \"last\")"
+  #   result = query_api.query(query:)
+  #   @data = result.values.flatten.map(&:records).flatten.sort_by(&:time).collect do |i|
+  #     { x: Time.zone.parse(i.time).strftime("%H:%M"), y: i.value }
+  #   end
+  #   render json: @data
+  # end
 
   def update
     home_attributes = entity_attributes
     home_attributes.delete(:atrea_password) if entity_attributes[:atrea_password].blank?
     home.update home_attributes
-    ReadDuplexJob.set(wait: 10.seconds).perform_later(home)
+    DuplexReadDataJob.set(wait: 10.seconds).perform_later(home)
     respond_to do |format|
       format.html { render :edit }
       format.json { render json: home.duplex }
@@ -71,8 +71,8 @@ class HomesController < ApplicationController
     if (home.scenario = params.require(:scenario)) == "manual"
       home.manual_control!(mode: params.require(:mode), power: params.require(:power).to_i)
     end
-    ReadDuplexJob.set(wait: 5.seconds).perform_later(home)
-    ReadDuplexJob.set(wait: 10.seconds).perform_later(home)
+    DuplexReadDataJob.set(wait: 5.seconds).perform_later(home)
+    DuplexReadDataJob.set(wait: 10.seconds).perform_later(home)
     respond_to do |format|
       format.html { render :show }
       format.json { render json: home.duplex }
@@ -81,7 +81,6 @@ class HomesController < ApplicationController
 
   def reset
     home.update duplex_auth_token: nil
-    ReadDuplexJob.perform_now(home)
     redirect_to home
   end
 

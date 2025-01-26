@@ -31,7 +31,7 @@ RSpec.describe HomesController, type: :controller do
     let(:home) { FactoryBot.create :my_home, user: controller.current_user, duplex_auth_options: { user_id: 1, unit_id: "0123", auth_token: "abc20" } }
 
     before do
-      allow(ReadDuplexJob).to receive(:perform_now)
+      allow(DuplexReadDataJob).to receive(:perform_now)
     end
 
     it { is_expected.to redirect_to(/home/) }

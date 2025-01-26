@@ -10,12 +10,21 @@ class Home < ApplicationRecord
 
   belongs_to :user, class_name: "Symphonia::User"
 
-  store_accessor :duplex_auth_options, :user_id, :unit_id, :auth_token, :login_in_progress, :valid_for, prefix: :duplex
+  store_accessor :duplex_auth_options, :user_id, :unit_id, :auth_token, prefix: :duplex
   store_accessor :duplex_user_ctrl, :name, :user_texts, :modes, :user_modes, :sensors
 
   store_accessor :influxdb_options, :url, :token, :org, :bucket, prefix: :influxdb
 
   validates :atrea_login, presence: true
+
+  enum :status, {
+    pending: "pending",
+    login_in_progress: "login_in_progress",
+    authenticated: "authenticated",
+    failed: "failed",
+  }, prefix: true, default: :pending
+
+  scope :active, -> { where.not(status: "login_in_progress").where.not(atrea_password: nil) }
 
   # @return [AtreaDuplex] with duplex sensor output
   def duplex
@@ -52,8 +61,6 @@ class Home < ApplicationRecord
     else
       # no supported yet
     end
-
-    name
   end
 
   # @return [String] "measurement" of all data bucket
