@@ -43,9 +43,8 @@ jobs:
       # Rails verifies the time zone in DB is the same as the time zone of the Rails app
       TZ: "Europe/Prague"
     services:
-      # https://github.com/actions/example-services/blob/master/.github/workflows/postgres-service.yml
       postgres:
-        image: postgres:15-alpine
+        image: postgres:16-alpine
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
