@@ -1,7 +1,7 @@
 class DuplexReadDataJob < ApplicationJob
   queue_as :default
 
-  unique :until_executed, on_conflict: :log
+  unique :until_and_while_executing, on_conflict: :log, runtime_lock_ttl: 3.minutes
 
   retry_on AtreaControl::Error, wait: 5.seconds, attempts: 3 do |job, exception|
     job.logger.error "Error reading data from RD5: #{exception.message}"
