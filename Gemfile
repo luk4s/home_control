@@ -39,7 +39,7 @@ gem "activejob-uniqueness", "~> 0.4.0"
 gem "active_record-pgcrypto", "~> 0.2.6"
 gem "influxdb-client", "~> 3.0"
 gem "newrelic_rpm", "~> 9.11"
-gem "nokogiri", "~> 1.16", force_ruby_platform: true
+gem "nokogiri", "~> 1.18", ">= 1.18.3", force_ruby_platform: true
 gem "sentry-rails"
 gem "sentry-ruby"
 gem "vite_rails", "~> 3.0"
