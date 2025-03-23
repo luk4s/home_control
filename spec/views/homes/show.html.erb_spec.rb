@@ -1,12 +1,8 @@
-RSpec.describe "homes/show", :logged do
-  helper_method :current_user
-
-  before do
-    allow(view).to receive(:current_user).and_return(Symphonia::User.current)
-  end
+RSpec.describe "homes/show" do
+  login_user
 
   context "with home" do
-    let(:home) { create :my_home, user: Symphonia::User.current }
+    let(:home) { create :my_home, user: view.current_user }
 
     before do
       assign(:home, home)

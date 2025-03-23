@@ -3,16 +3,18 @@ module ApplicationCable
     identified_by :current_user
 
     def connect
-      self.current_user = find_user || reject_unauthorized_connection
-      logger.add_tags "ActionCable", current_user.login unless current_user.nil?
+      self.current_user = find_verified_user
+      logger.add_tags "ActionCable", current_user.email unless current_user.nil?
     end
 
-    protected
+    private
 
-    def find_user
-      return if (credentials = request.session["symphonia/user_credentials"]).blank?
-
-      ::Symphonia::User.find_by(persistence_token: credentials.split(":")[0])
+    def find_verified_user
+      if (verified_user = env["warden"].user)
+        verified_user
+      else
+        reject_unauthorized_connection
+      end
     end
 
   end

@@ -1,0 +1,24 @@
+<div class="mx-auto" style="max-width: 540px;">
+  <div class="card w-75 mx-auto">
+    <div class="card-body">
+      <h2 class="card-title"><%= t('.change_your_password') %></h2>
+
+      <%= bootstrap_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+        <%= f.hidden_field :reset_password_token %>
+
+        <% help = t('devise.shared.minimum_password_length', count: @minimum_password_length) if @minimum_password_length %>
+        <%= f.password_field :password, autofocus: true, autocomplete: "new-password", help: %>
+
+        <%= f.label :password_confirmation, t('.confirm_new_password') %><br/>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+
+        <div class="d-grid gap-2">
+          <%= f.primary t('.change_my_password') %>
+        </div>
+      <% end %>
+
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>
