@@ -1,15 +1,17 @@
+require "sidekiq/web"
+require "sidekiq/cron/web"
+
 Rails.application.routes.draw do
   devise_for :users
+  authenticate :user, ->(user) { user.admin? } do
+    mount Sidekiq::Web => "/admin/sidekiq"
+  end
   root "homes#show"
-
-  # mount Symphonia::Engine => "/" # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-
+  
   resource :home do
     patch "scenario/:scenario", to: "homes#scenario", as: "scenario"
     delete "reset"
     # get "history.json", to: "homes#history"
-    # get "somfy"
-    # get "somfy/authorize", to: "homes#somfy_authorize"
   end
 
   get "up" => "rails/health#show", :as => :rails_health_check

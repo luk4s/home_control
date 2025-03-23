@@ -28,8 +28,15 @@ group :development do
   gem "spring"
 end
 
+gem "bootstrap_form", "~> 5.4"
+gem "devise", "~> 4.9"
+gem "devise-i18n", "~> 1.13"
+gem "rack-attack", "~> 6.7"
+gem "rails-i18n", "~> 7.0"
+gem "sidekiq", "~> 8.0"
+gem "sidekiq-cron", "~> 2.2"
+
 gem "atrea_control", "~> 3.0"
-# gem "symphonia", "~> 6.0.2"
 
 source "https://gems.luk4s.cz" do
   gem "symphonia_spec", group: %i[development test]
@@ -44,13 +51,3 @@ gem "sentry-rails"
 gem "sentry-ruby"
 gem "vite_rails", "~> 3.0"
 
-gem "sidekiq", "~> 7.3"
-gem "sidekiq-cron", "~> 2.2"
-
-gem "devise", "~> 4.9"
-
-gem "devise-i18n", "~> 1.13"
-
-gem "bootstrap_form", "~> 5.4"
-
-gem "rails-i18n", "~> 7.0"

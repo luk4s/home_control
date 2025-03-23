@@ -235,6 +235,8 @@ GEM
     raabro (1.4.0)
     racc (1.8.1)
     rack (3.1.12)
+    rack-attack (6.7.0)
+      rack (>= 1.0, < 4)
     rack-mini-profiler (3.3.1)
       rack (>= 1.2.0)
     rack-proxy (0.7.7)
@@ -351,12 +353,12 @@ GEM
     sentry-ruby (5.23.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
-    sidekiq (7.3.9)
-      base64
-      connection_pool (>= 2.3.0)
-      logger
-      rack (>= 2.2.4)
-      redis-client (>= 0.22.2)
+    sidekiq (8.0.1)
+      connection_pool (>= 2.5.0)
+      json (>= 2.9.0)
+      logger (>= 1.6.2)
+      rack (>= 3.1.0)
+      redis-client (>= 0.23.2)
     sidekiq-cron (2.2.0)
       cronex (>= 0.13.0)
       fugit (~> 1.8, >= 1.11.1)
@@ -424,13 +426,14 @@ DEPENDENCIES
   pg (~> 1.5.4)
   pry-rails
   puma (~> 6.4)
+  rack-attack (~> 6.7)
   rack-mini-profiler (~> 3.3)
   rails (~> 7.1)
   rails-i18n (~> 7.0)
   redis (~> 5.4)
   sentry-rails
   sentry-ruby
-  sidekiq (~> 7.3)
+  sidekiq (~> 8.0)
   sidekiq-cron (~> 2.2)
   spring
   sprockets-rails
