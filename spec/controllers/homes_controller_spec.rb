@@ -3,7 +3,7 @@ RSpec.describe HomesController, type: :controller do
     subject { get :show }
 
     context "without login" do
-      it { is_expected.to redirect_to /sign_in/ }
+      it { is_expected.to redirect_to(/sign_in/) }
     end
 
     context "without home" do
@@ -46,7 +46,6 @@ RSpec.describe HomesController, type: :controller do
 
     it "reset status" do
       expect { reset }.to change { home.reload.status }.to "pending"
-
     end
   end
 end

@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/bin/sh
 set -e
 
 install() {
@@ -11,8 +11,8 @@ server() {
   bundle exec puma -e "${RAILS_ENV}" -p 3000
 }
 case "$1" in
-"bash")
-  bash -l
+"bash"|"sh"|"ash")
+  ash
   ;;
 "rails")
   bundle exec rails "$2"

@@ -7,4 +7,3 @@ class User < ApplicationRecord
   has_one :home, dependent: :destroy
 
 end
-

@@ -49,7 +49,6 @@ gem "sidekiq-cron", "~> 2.2"
 
 gem "devise", "~> 4.9"
 
-
 gem "devise-i18n", "~> 1.13"
 
 gem "bootstrap_form", "~> 5.4"
