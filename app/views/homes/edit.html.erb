@@ -1,9 +1,11 @@
-<%= title current_user.name %>
-<dl class="row">
-  <dt class="col-sm-3"><%= Symphonia::User.human_attribute_name(:current_login_at) %></dt>
-  <dd class="col-sm-9"><%= current_user.current_login_at && time_tag(current_user.current_login_at) || "-" %></dd>
-  <dt class="col-sm-3"><%= Symphonia::User.human_attribute_name(:single_access_token) %></dt>
-  <dd class="col-sm-9"><code><%= current_user.single_access_token %></code></dd>
-
-</dl>
-<%= render "form" %>
+<div class="mx-auto" style="max-width: 540px;">
+  <div class="card w-75 mx-auto">
+    <div class="card-body">
+      <%= render "form" %>
+    </div>
+    <div class="card-footer">
+      Upravit uživatelský účet?
+      <%= link_to t(:button_here), edit_user_registration_path %>
+    </div>
+  </div>
+</div>

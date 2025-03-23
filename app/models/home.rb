@@ -8,7 +8,7 @@ class Home < ApplicationRecord
   end
   serialize :atrea_password, coder: ActiveRecord::PGCrypto::SymmetricCoder
 
-  belongs_to :user, class_name: "Symphonia::User"
+  belongs_to :user
 
   store_accessor :duplex_auth_options, :user_id, :unit_id, :auth_token, prefix: :duplex
   store_accessor :duplex_user_ctrl, :name, :user_texts, :modes, :user_modes, :sensors

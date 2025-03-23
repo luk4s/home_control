@@ -1,6 +1,5 @@
 class HomesController < ApplicationController
-  before_action :login_require
-  before_action :home, except: %i[new create]
+  before_action :authenticate_user!
 
   skip_forgery_protection if: -> { request.format.json? }, only: %i[scenario]
 
@@ -21,6 +20,7 @@ class HomesController < ApplicationController
   end
 
   def edit
+    @home = home
     # render "edit"
   end
 
@@ -80,7 +80,7 @@ class HomesController < ApplicationController
   end
 
   def reset
-    home.update duplex_auth_token: nil
+    home.update status: "pending", duplex_auth_token: nil
     redirect_to home
   end
 
@@ -93,7 +93,7 @@ class HomesController < ApplicationController
   end
 
   def home
-    @home ||= current_user.home || redirect_to(action: "new")
+    @home ||= current_user.home || redirect_to({ action: "new" }, alert: t(:text_new_home_message))
   end
 
 end

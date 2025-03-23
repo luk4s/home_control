@@ -14,7 +14,7 @@ class AtreaDuplex
     Rails.logger.debug "New login in progress..."
     home.status_login_in_progress!
     duplex_tokens = AtreaControl::Duplex::Login.user_tokens login: home.atrea_login, password: home.atrea_password
-    Rails.logger.debug "Login success => #{duplex_tokens}..."
+    Rails.logger.debug { "Login success => #{duplex_tokens}..." }
     user_ctrl = AtreaControl::Duplex::UserCtrl.data(**duplex_tokens)
     home.update!({
                    status: :authenticated,

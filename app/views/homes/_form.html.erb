@@ -1,6 +1,4 @@
-<%= symphonia_form_for(@home, url: home_path, autocomplete: "off") do |f| %>
-  <%= f.error_messages %>
-
+<%= bootstrap_form_for(@home, url: home_path, autocomplete: "off") do |f| %>
   <fieldset>
     <legend><%= t :legend_atrea %></legend>
     <%= f.text_field :atrea_login, autocomplete: "off", required: true %>
@@ -14,7 +12,7 @@
     <%= f.text_field :influxdb_bucket %>
   </details>
 
-  <p class="buttons">
+  <div class="d-grid gap-2">
     <%= f.primary %>
-  </p>
+  </div>
 <% end %>

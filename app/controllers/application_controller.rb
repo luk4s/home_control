@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Symphonia::ControllerExtensions
-  helper Symphonia::ApplicationHelper
+  # include Symphonia::ControllerExtensions
+  # helper Symphonia::ApplicationHelper
 
 end

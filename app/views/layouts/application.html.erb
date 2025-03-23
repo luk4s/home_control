@@ -2,7 +2,7 @@
 <html lang="<%= I18n.locale %>" data-bs-theme="unknown">
 <head>
   <meta charset="UTF-8">
-  <title><%= html_title %></title>
+  <title>home.luk4s.cz</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= yield :meta_tags %>
   <%= vite_stylesheet_tag "application", media: "all", data: { "turbo-track" => "reload" } %>
@@ -12,20 +12,47 @@
   <%= yield :javascript_tags %>
   <%= csrf_meta_tags %>
 </head>
-<body class="controller-<%= controller_name %> action-<%= action_name %>" data-menu-item="<%= @menu_item.to_s %>">
+<body class="controller-<%= controller_name %> action-<%= action_name %>">
 <header data-turbo-permanent>
+
+
   <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <%= icon("bars") %>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <%= render_menu(:top_menu) %>
-      <%= render_menu(:top_menu_account, { container_class: "mr-right" }) %>
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <%= icon("bars") %>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul itemscope="itemscope" itemtype="https://schema.org/BreadcrumbList" class="navbar-nav me-auto mb-2 mb-lg-0" id="top_menu">
+          <li class="nav-item home">
+            <a class="nav-link" itemprop="url" href="/">
+              <i class="fa fa-home"></i>
+              <span itemprop="title"><%= t :button_home %></span>
+            </a>
+          </li>
+        </ul>
+        <ul itemscope="itemscope" itemtype="https://schema.org/BreadcrumbList" class="navbar-nav ms-auto" id="top_menu_account">
+          <% if user_signed_in? %>
+            <li class="nav-item my_account">
+              <a class="nav-link" itemprop="url" href="<%= edit_home_path %>">
+                <i class="fa fa-wrench"></i>
+                <span itemprop="title"><%= t :button_my_account %></span>
+              </a>
+            </li>
+            <li class="nav-item logout">
+              <a class="nav-link" itemprop="url" rel="nofollow" data-turbo-method="delete" href="<%= destroy_user_session_path %>">
+                <i class="fa fa-sign-out"></i>
+                <span itemprop="title"><%= t :button_logout %></span>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
     </div>
   </nav>
 </header>
 <section id="main" class="container">
-  <slot id="flash_messages" name="flash_messages"><%= render_flash_messages.html_safe -%></slot>
+  <!--  <slot id="flash_messages" name="flash_messages"><%#= render_flash_messages.html_safe -%></slot>-->
+  <%= render_flash_messages %>
   <%= yield %>
 </section>
 
