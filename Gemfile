@@ -30,7 +30,7 @@ end
 
 gem "bootstrap_form", "~> 5.4"
 gem "devise", "~> 4.9"
-gem "devise-i18n", "~> 1.13"
+gem "devise-i18n", "~> 1.14", ">= 1.14.0"
 gem "rack-attack", "~> 6.7"
 gem "rails-i18n", "~> 7.0"
 gem "sidekiq", "~> 8.0"
