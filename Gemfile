@@ -2,7 +2,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.1"
+gem "rails", "~> 8.0", ">= 8.0.0"
 
 gem "pg", "~> 1.5.4"
 # Use Puma as the app server
@@ -30,9 +30,9 @@ end
 
 gem "bootstrap_form", "~> 5.4"
 gem "devise", "~> 4.9"
-gem "devise-i18n", "~> 1.13"
+gem "devise-i18n", "~> 1.14", ">= 1.14.0"
 gem "rack-attack", "~> 6.7"
-gem "rails-i18n", "~> 7.0"
+gem "rails-i18n", "~> 8.0", ">= 8.0.0"
 gem "sidekiq", "~> 8.0"
 gem "sidekiq-cron", "~> 2.2"
 
@@ -46,8 +46,8 @@ gem "activejob-uniqueness", "~> 0.4"
 gem "active_record-pgcrypto", "~> 0.2"
 gem "influxdb-client", "~> 3.0"
 gem "newrelic_rpm", "~> 9.11"
-gem "nokogiri", "~> 1.16", force_ruby_platform: true
-gem "sentry-rails"
+gem "nokogiri", "~> 1.18", ">= 1.18.9", force_ruby_platform: true
+gem "sentry-rails", ">= 5.24.0"
 gem "sentry-ruby"
 gem "vite_rails", "~> 3.0"
 
