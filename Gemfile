@@ -2,13 +2,13 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.1"
+gem "rails", "~> 7.2", ">= 7.2.2.2"
 
 gem "pg", "~> 1.5.4"
 # Use Puma as the app server
 gem "puma", "~> 6.4"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem "jbuilder", "~> 2.7"
+gem "jbuilder", "~> 2.14", ">= 2.14.0"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.4", require: false
