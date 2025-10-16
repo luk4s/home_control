@@ -2,7 +2,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.1"
+gem "rails", "~> 7.2", ">= 7.2.2.2"
 
 gem "pg", "~> 1.5.4"
 # Use Puma as the app server
@@ -23,18 +23,18 @@ end
 
 group :development do
   gem "listen", "~> 3.3"
-  gem "rack-mini-profiler", "~> 3.3"
+  gem "rack-mini-profiler", "~> 4.0", ">= 4.0.0"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring"
 end
 
 gem "bootstrap_form", "~> 5.4"
 gem "devise", "~> 4.9"
-gem "devise-i18n", "~> 1.13"
-gem "rack-attack", "~> 6.7"
-gem "rails-i18n", "~> 7.0"
-gem "sidekiq", "~> 8.0"
-gem "sidekiq-cron", "~> 2.2"
+gem "devise-i18n", "~> 1.14", ">= 1.14.0"
+gem "rack-attack", "~> 6.8", ">= 6.8.0"
+gem "rails-i18n", "~> 8.0", ">= 8.0.0"
+gem "sidekiq", "~> 8.0", ">= 8.0.2"
+gem "sidekiq-cron", "~> 2.3", ">= 2.3.0"
 
 gem "atrea_control", "~> 3.0"
 
@@ -47,7 +47,7 @@ gem "active_record-pgcrypto", "~> 0.2"
 gem "influxdb-client", "~> 3.0"
 gem "newrelic_rpm", "~> 9.11"
 gem "nokogiri", "~> 1.16", force_ruby_platform: true
-gem "sentry-rails"
+gem "sentry-rails", ">= 5.24.0"
 gem "sentry-ruby"
 gem "vite_rails", "~> 3.0"
 
