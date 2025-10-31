@@ -28,7 +28,7 @@ group :development do
   gem "spring"
 end
 
-gem "bootstrap_form", "~> 5.4"
+gem "bootstrap_form", "~> 5.5", ">= 5.5.0"
 gem "devise", "~> 4.9"
 gem "devise-i18n", "~> 1.13"
 gem "rack-attack", "~> 6.7"
