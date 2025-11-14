@@ -16,6 +16,12 @@ RSpec.describe HomesController, type: :controller do
       before { FactoryBot.create :my_home, user: controller.current_user }
 
       it { is_expected.to have_http_status :ok }
+
+      it "json format" do
+        allow_any_instance_of(AtreaDuplex).to receive(:data).and_return({ some: "data" })
+        get :show, format: :json
+        expect(response).to have_http_status :ok
+      end
     end
   end
 

@@ -36,7 +36,7 @@ gem "rack-attack", "~> 6.7"
 gem "sidekiq", "~> 8.0"
 gem "sidekiq-cron", "~> 2.2"
 
-gem "atrea_control", "~> 3.0"
+gem "atrea_control", "~> 3.1"
 
 source "https://gems.luk4s.cz" do
   gem "symphonia_spec", group: %i[development test]
@@ -50,4 +50,3 @@ gem "nokogiri", "~> 1.16", force_ruby_platform: true
 gem "sentry-rails"
 gem "sentry-ruby"
 gem "vite_rails", "~> 3.0"
-

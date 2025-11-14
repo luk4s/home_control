@@ -27,7 +27,7 @@ class AtreaDuplex
 
   def data
     control.values
-  rescue RestClient::Forbidden, AtreaControl::SessionExpired
+  rescue Faraday::ForbiddenError, AtreaControl::SessionExpired
     Rails.logger.debug "session expired..."
     remove_instance_variable :@control
     login_and_update_tokens! && control.values
@@ -44,7 +44,7 @@ class AtreaDuplex
   end
 
   def as_json(*_args)
-    data.merge(sid: home.duplex_auth_token, login_in_progress: home.duplex_login_in_progress)
+    data.merge(sid: home.duplex_auth_token, login_in_progress: home.status_login_in_progress?)
   end
 
 end
