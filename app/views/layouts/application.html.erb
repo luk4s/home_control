@@ -12,8 +12,6 @@
   <%= vite_javascript_tag "application", data: { "turbo-track" => "reload" } %>
   <%= yield :javascript_tags %>
   <%= csrf_meta_tags %>
-    <%= vite_client_tag %>
-    <%= vite_javascript_tag 'application' %>
     <!--
       If using a TypeScript entrypoint file:
         vite_typescript_tag 'application'
