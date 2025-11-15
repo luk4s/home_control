@@ -81,7 +81,10 @@
 <script type="module">
   import * as bootstrap from 'bootstrap'
 
-  new bootstrap.Popover(document.getElementById('popoverButton'))
+  const popoverButton = document.getElementById('popoverButton');
+  if (popoverButton) {
+    new bootstrap.Popover(popoverButton);
+  }
 </script>
 <script type="application/javascript">
   document.addEventListener("DOMContentLoaded", () => {
