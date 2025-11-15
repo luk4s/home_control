@@ -31,5 +31,3 @@ Rails.start();
 
 // Example: Import a stylesheet in app/frontend/index.css
 // import '~/index.css'
-import "@popperjs/core"
-import "bootstrap"

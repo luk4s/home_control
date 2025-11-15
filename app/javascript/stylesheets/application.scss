@@ -1,5 +1,3 @@
-@import "~bootstrap/scss/bootstrap.scss";
-
 $fa-font-path: '@fortawesome/fontawesome-free/webfonts';
 @import "@fortawesome/fontawesome-free/scss/fontawesome";
 @import "@fortawesome/fontawesome-free/scss/solid";
@@ -21,51 +19,10 @@ footer.footer {
   width: 100%;
 }
 
-@keyframes highlight {
-  from {
-    background-color: map-get($theme-colors, warning);
-  }
-  to {
-    background-color: inherit;
-  }
+.required label, label[required], label.required, .has-error {
+  color: red !important;
 }
 
-@media print {
-  .contextual {
-    @extend .d-print-none;
-  }
-  a[href]:after {
-    content: none
-  }
-  .btn {
-    @extend .d-print-none;
-  }
+.required label:after, label[required]:after, label.required:after {
+  content: '* '
 }
-@mixin inactive-row {
-  opacity: 0.5
-}
-td.price {
-  text-align: right;
-}
-table.table {
-  th a.asc {
-    &:after {
-      content: "\2191";
-    }
-  }
-  th a.desc {
-    &:after {
-      content: "\2193";
-    }
-  }
-  tr.status {
-    &--lock, &--inactive, &--archived {
-      @include inactive-row;
-    }
-  }
-  .buttons {
-    text-align: right;
-  }
-}
-.required label, label[required], label.required, .has-error {color: red !important;}
-.required label:after, label[required]:after, label.required:after { content: '* '}
