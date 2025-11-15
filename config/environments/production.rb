@@ -24,6 +24,11 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
+  # Restrict allowed origins for Action Cable WebSocket connections (Rails 8+).
+  config.action_cable.allowed_origins = [
+    "https://home.luk4s.cz",
+    "http://localhost:3000"
+  ]
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   config.assume_ssl = true
 
