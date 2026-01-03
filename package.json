@@ -15,7 +15,7 @@
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",
     "vite": "^5.4.20",
-    "vite-plugin-ruby": "^5.1.0"
+    "vite-plugin-ruby": "^5.1.2"
   },
   "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }
