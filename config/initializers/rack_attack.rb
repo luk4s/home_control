@@ -28,12 +28,14 @@ Rack::Attack.blocklist("api/fail2ban") do |req|
     # Extract the token
     token = req.get_header("HTTP_AUTHORIZATION").sub(/^Bearer /, "")
 
-    # Check if token is invalid (not found in database)
-    # We use a simple cache lookup to avoid hitting DB on every request
+    # Cache token existence briefly to avoid a DB lookup on every request
+    token_exists = Rails.cache.fetch("api-token-exists:#{token}", expires_in: 5.minutes) do
+      User.exists?(api_token: token)
+    end
     discriminator = "api-bearer-fail:#{req.ip}"
 
     # Mark as failed attempt if token doesn't exist
-    unless User.exists?(api_token: token)
+    unless token_exists
       # Track this failed attempt
       Rack::Attack::Fail2Ban.filter(discriminator, maxretry: 10, findtime: 10.minutes, bantime: 1.hour) do
         true # count this as a failed attempt
