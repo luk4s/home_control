@@ -34,12 +34,8 @@ Rack::Attack.blocklist("api/fail2ban") do |req|
     end
     discriminator = "api-bearer-fail:#{req.ip}"
 
-    # Mark as failed attempt if token doesn't exist
-    unless token_exists
-      # Track this failed attempt
-      Rack::Attack::Fail2Ban.filter(discriminator, maxretry: 10, findtime: 10.minutes, bantime: 1.hour) do
-        true # count this as a failed attempt
-      end
+    Rack::Attack::Fail2Ban.filter(discriminator, maxretry: 10, findtime: 10.minutes, bantime: 1.hour) do
+      token_exists
     end
   end
 end
