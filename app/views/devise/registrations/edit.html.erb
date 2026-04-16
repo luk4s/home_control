@@ -1,4 +1,4 @@
-<div class="mx-auto" style="max-width: 540px;">
+<div class="mx-auto">
   <div class="card w-75 mx-auto">
     <div class="card-body">
       <h2 class="card-title">
@@ -21,13 +21,23 @@
           <%= f.primary t('.update') %>
         </div>
       <% end %>
-    </div>
-    <div class="card-footer">
-      <h3 class="card-title">
-        <%= t('.cancel_my_account') %>
-      </h3>
-      <p><%= t('.unhappy') %></p>
-      <%= button_to t('.cancel_my_account'), registration_path(resource_name), data: { confirm: t('.are_you_sure'), turbo_confirm: t('.are_you_sure') }, method: :delete, class: "btn btn-danger" %>
+  </div>
+  <div class="card-footer">
+    <h3 class="card-title">
+      <%= t(:api_token_heading) %>
+    </h3>
+    <p class="text-muted small"><%= t(:api_token_help) %></p>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control font-monospace" value="<%= current_user.api_token %>" readonly onclick="this.select()">
+      <%= button_to t(:api_token_regenerate_button), api_token_path, method: :post, class: "btn btn-warning", data: { confirm: t(:api_token_regenerate_confirm), turbo_confirm: t(:api_token_regenerate_confirm) } %>
     </div>
   </div>
+  <div class="card-footer">
+    <h3 class="card-title">
+      <%= t('.cancel_my_account') %>
+    </h3>
+    <p><%= t('.unhappy') %></p>
+    <%= button_to t('.cancel_my_account'), registration_path(resource_name), data: { confirm: t('.are_you_sure'), turbo_confirm: t('.are_you_sure') }, method: :delete, class: "btn btn-danger" %>
+  </div>
+</div>
 </div>

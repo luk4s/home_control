@@ -36,7 +36,7 @@
         <ul itemscope="itemscope" itemtype="https://schema.org/BreadcrumbList" class="navbar-nav me-auto mb-2 mb-lg-0" id="top_menu">
           <li class="nav-item home">
             <a class="nav-link" itemprop="url" href="/">
-              <i class="fa fa-home"></i>
+              <i class="fa-solid fa-house"></i>
               <span itemprop="title"><%= t :button_home %></span>
             </a>
           </li>
@@ -45,13 +45,13 @@
           <% if user_signed_in? %>
             <li class="nav-item my_account">
               <a class="nav-link" itemprop="url" href="<%= edit_home_path %>">
-                <i class="fa fa-wrench"></i>
+                <i class="fa-solid fa-wrench"></i>
                 <span itemprop="title"><%= t :button_my_account %></span>
               </a>
             </li>
             <li class="nav-item logout">
               <a class="nav-link" itemprop="url" rel="nofollow" data-turbo-method="delete" href="<%= destroy_user_session_path %>">
-                <i class="fa fa-sign-out"></i>
+                <i class="fa-solid fa-right-from-bracket"></i>
                 <span itemprop="title"><%= t :button_logout %></span>
               </a>
             </li>
@@ -67,7 +67,7 @@
   <%= yield %>
 </section>
 
-<div id="ajax-indicator" style="display:none"><i class="fa fa-spinner fa-spin fa-large"></i></div>
+<div id="ajax-indicator" style="display:none"><i class="fa-solid fa-spinner fa-spin fa-lg"></i></div>
 <script async src="https://cdn.jsdelivr.net/npm/es-module-shims@1/dist/es-module-shims.min.js" crossorigin="anonymous"></script>
 <script type="importmap">
     {

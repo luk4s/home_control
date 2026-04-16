@@ -54,4 +54,40 @@ RSpec.describe HomesController, type: :controller do
       expect { reset }.to change { home.reload.status }.to "pending"
     end
   end
+
+  describe "Bearer token authentication" do
+    let!(:user) { FactoryBot.create(:user) }
+    let!(:home) { FactoryBot.create(:my_home, user:) }
+
+    context "with valid bearer token" do
+      before do
+        allow_any_instance_of(AtreaDuplex).to receive(:data).and_return({ some: "data" })
+        request.headers["Authorization"] = "Bearer #{user.api_token}"
+      end
+
+      it "authenticates user and returns json" do
+        get :show, format: :json
+        expect(response).to have_http_status :ok
+        expect(response.content_type).to match(%r{application/json})
+      end
+    end
+
+    context "with invalid bearer token" do
+      before do
+        request.headers["Authorization"] = "Bearer invalid_token_xyz"
+      end
+
+      it "returns unauthorized" do
+        get :show, format: :json
+        expect(response).to have_http_status :unauthorized
+      end
+    end
+
+    context "without bearer token" do
+      it "returns unauthorized" do
+        get :show, format: :json
+        expect(response).to have_http_status :unauthorized
+      end
+    end
+  end
 end
