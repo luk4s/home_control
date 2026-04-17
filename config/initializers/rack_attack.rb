@@ -1,6 +1,32 @@
 # Use Rails cache (Redis in production, memory in development/test)
 Rack::Attack.cache.store = Rails.cache
 
+# Constants for API token validation
+API_TOKEN_LENGTH = 24 # has_secure_token and migration both generate 24-char tokens
+
+# Helper: validate token format and check if valid (with secure caching)
+def self.valid_api_token?(token)
+  # Pre-check: token must be present and exactly 24 characters
+  return false if token.blank? || token.length != API_TOKEN_LENGTH
+
+  # Generate SHA256 digest for cache key (never store raw token in cache)
+  token_digest = Digest::SHA256.hexdigest(token)
+  cache_key = "api-token-valid:#{token_digest}"
+
+  # Only cache positive lookups (valid tokens) for 5 minutes
+  # Invalid tokens are NOT cached to prevent Redis pollution from brute-force attempts
+  cached_result = Rails.cache.read(cache_key)
+  return cached_result if cached_result == true
+
+  # Check database
+  token_valid = User.exists?(api_token: token)
+
+  # Cache only if valid
+  Rails.cache.write(cache_key, true, expires_in: 5.minutes) if token_valid
+
+  token_valid
+end
+
 # Always allow requests from localhost
 # (blocklist & throttles are skipped)
 Rack::Attack.safelist("allow from localhost") do |req|
@@ -28,14 +54,15 @@ Rack::Attack.blocklist("api/fail2ban") do |req|
     # Extract the token
     token = req.get_header("HTTP_AUTHORIZATION").sub(/^Bearer /, "")
 
-    # Cache token existence briefly to avoid a DB lookup on every request
-    token_exists = Rails.cache.fetch("api-token-exists:#{token}", expires_in: 5.minutes) do
-      User.exists?(api_token: token)
-    end
+    # Check if token is valid (with secure caching)
+    token_valid = Rack::Attack.valid_api_token?(token)
+
+    # Track failed attempts by IP
     discriminator = "api-bearer-fail:#{req.ip}"
 
+    # Fail2Ban filter: count this as a failure if token is invalid
     Rack::Attack::Fail2Ban.filter(discriminator, maxretry: 10, findtime: 10.minutes, bantime: 1.hour) do
-      !token_exists
+      !token_valid # true = count as failed attempt
     end
   end
 end
