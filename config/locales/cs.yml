@@ -3,6 +3,7 @@ cs:
   button_here: Zde
   button_home: Domů
   button_logout: Odhlásit
+  button_update: Aktualizovat
   button_my_account: Můj účet
   text_are_you_sure: Jsi si jistý?
   # home
@@ -34,6 +35,9 @@ cs:
   text_new_home_message: Registruj nejprve novou domácnost
   api_token_heading: API Přístupový Token
   api_token_help: 'Použij tento token pro API požadavky s hlavičkou "Authorization: Bearer <token>"'
-  api_token_regenerate_button: Vygenerovat Nový Token
+  api_token_regenerate_button: Vygenerovat nový token
   api_token_regenerate_confirm: Tímto zneplatníš současný token. Všechny aplikace používající starý token přestanou fungovat. Pokračovat?
   api_token_regenerated: API token byl úspěšně vygenerován
+  registrations:
+    edit:
+      title: Upravit účet
