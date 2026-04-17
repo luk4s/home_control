@@ -25,7 +25,7 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Restrict allowed origins for Action Cable WebSocket connections (Rails 8+).
-  config.action_cable.allowed_origins = [
+  config.action_cable.allowed_request_origins = [
     "https://home.luk4s.cz",
     "http://localhost:3000"
   ]
