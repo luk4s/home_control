@@ -35,7 +35,7 @@ Rack::Attack.blocklist("api/fail2ban") do |req|
     discriminator = "api-bearer-fail:#{req.ip}"
 
     Rack::Attack::Fail2Ban.filter(discriminator, maxretry: 10, findtime: 10.minutes, bantime: 1.hour) do
-      token_exists
+      !token_exists
     end
   end
 end
