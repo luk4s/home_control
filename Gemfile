@@ -30,7 +30,7 @@ group :development do
 end
 
 gem "bootstrap_form", "~> 5.4"
-gem "devise", "~> 4.9"
+gem "devise", "~> 5.0"
 gem "devise-i18n", "~> 1.13"
 gem "rack-attack", "~> 6.7"
 gem "sidekiq", "~> 8.0"
