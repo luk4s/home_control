@@ -10,4 +10,11 @@ export default defineConfig({
       '@': '/app/javascript',
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler'
+      }
+    }
+  }
 });

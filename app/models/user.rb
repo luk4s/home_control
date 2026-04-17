@@ -6,4 +6,6 @@ class User < ApplicationRecord
 
   has_one :home, dependent: :destroy
 
+  has_secure_token :api_token
+
 end

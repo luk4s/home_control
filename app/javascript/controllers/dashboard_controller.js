@@ -31,7 +31,7 @@ export default class extends Controller {
 
     connect() {
         console.debug("Dashboard controller connected")
-        this.currentModeTarget.innerHTML = "<i class=\"fa fa-refresh fa-spin fa-2x fa-fw\"></i>Connecting..."
+        this.currentModeTarget.innerHTML = "<i class=\"fa-solid fa-arrows-rotate fa-spin fa-2x fa-fw\"></i>Connecting..."
     }
 
     currentPowerValueChanged() {
@@ -62,7 +62,7 @@ export default class extends Controller {
     preheatingValueChanged() {
         const locales = JSON.parse(this.preheatingTarget.dataset.values)
         const icon = document.createElement("i")
-        icon.className = `fa fa-thermometer-${this.preheatingValue ? "full" : "empty"}`
+        icon.className = `fa-solid fa-temperature-${this.preheatingValue ? "full" : "empty"}`
         this.preheatingTarget.innerHTML = (this.preheatingValue ? locales.enable : locales.disable) + "&nbsp;"
         this.preheatingTarget.classList.toggle("text-danger")
         this.preheatingTarget.appendChild(icon);
@@ -72,7 +72,7 @@ export default class extends Controller {
         this.ventilationControlsTarget.querySelectorAll(":scope > a").forEach(i => {
             const name = i.dataset.scenario;
             i.querySelector("span").textContent = this.controlsValue[ name ].text
-            i.querySelector("i").className = `fa fa-${this.controlsValue[ name ].icon}`
+            i.querySelector("i").className = `fa-solid fa-${this.controlsValue[ name ].icon}`
         })
     }
 
@@ -82,7 +82,7 @@ export default class extends Controller {
             const response = await patch(target.href)
             if (response.ok) {
                 target.querySelector("span").textContent = this.localesValue.disable_with
-                target.querySelector("i").className = "fa fa-cog fa-spin"
+                target.querySelector("i").className = "fa-solid fa-gear fa-spin"
             }
         }
     }
@@ -108,7 +108,7 @@ export default class extends Controller {
         if (!response.ok) return;
 
         target.querySelector("span").textContent = this.localesValue.disable_with;
-        target.querySelector("i").className = "fa fa-cog fa-spin";
+        target.querySelector("i").className = "fa-solid fa-gear fa-spin";
         target.style.display = null;
 
         const manualPowerControl = this.ventilationControlsTarget.querySelector("#manual_power_control");

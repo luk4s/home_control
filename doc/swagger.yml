@@ -30,6 +30,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/HomeData'
+        '401':
+          description: Unauthorized - missing or invalid bearer token
   /home/scenario/{scenario}:
     parameters:
       - name: scenario
@@ -75,6 +77,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/HomeData'
+        "401":
+          description: Unauthorized - missing or invalid bearer token
 
 security:
   - tokenAuth: []
@@ -84,6 +88,21 @@ components:
       type: http
       scheme: bearer
       bearerFormat: Token
+      description: |
+        Use your personal API token for authentication. 
+        
+        To get your token:
+        1. Log in to the web application
+        2. Navigate to your account settings (profile page)
+        3. Copy your API token from the "API Access Token" section
+        
+        Include the token in the Authorization header:
+        `Authorization: Bearer <your_api_token>`
+        
+        **Security notes:**
+        - Keep your token secret
+        - If compromised, regenerate it immediately from your profile
+        - Each user has one permanent token until manually regenerated
   schemas:
     HomeData:
       type: object

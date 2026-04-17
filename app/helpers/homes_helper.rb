@@ -10,7 +10,7 @@ module HomesHelper
         css_class: "btn-danger",
       },
       auto: {
-        icon: "cogs",
+        icon: "gears",
         text: t("controls.auto"),
         url: scenario_home_path(scenario: "auto"),
         css_class: "btn-secondary",

@@ -20,3 +20,8 @@ en:
   preheating:
     enable: Heating
     disable: Off
+  api_token_heading: API Access Token
+  api_token_help: 'Use this token for API requests with "Authorization: Bearer <token>" header'
+  api_token_regenerate_button: Regenerate Token
+  api_token_regenerate_confirm: This will invalidate your current token. Any applications using the old token will stop working. Continue?
+  api_token_regenerated: API token has been regenerated successfully
