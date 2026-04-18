@@ -23,6 +23,8 @@ class AtreaDuplex
                    duplex_auth_token: duplex_tokens[:sid],
                    duplex_user_ctrl: user_ctrl,
                  })
+  rescue AtreaControl::Error
+    home.status_failed!
   end
 
   def data

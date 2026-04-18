@@ -5,7 +5,7 @@ Rack::Attack.cache.store = Rails.cache
 API_TOKEN_LENGTH = 24 # has_secure_token and migration both generate 24-char tokens
 
 # Helper: validate token format and check if valid (with secure caching)
-def self.valid_api_token?(token)
+def valid_api_token?(token)
   # Pre-check: token must be present and exactly 24 characters
   return false if token.blank? || token.length != API_TOKEN_LENGTH
 
@@ -55,7 +55,7 @@ Rack::Attack.blocklist("api/fail2ban") do |req|
     token = req.get_header("HTTP_AUTHORIZATION").sub(/^Bearer /, "")
 
     # Check if token is valid (with secure caching)
-    token_valid = Rack::Attack.valid_api_token?(token)
+    token_valid = valid_api_token?(token)
 
     # Track failed attempts by IP
     discriminator = "api-bearer-fail:#{req.ip}"
