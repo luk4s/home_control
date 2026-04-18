@@ -92,8 +92,13 @@ Rails.application.configure do
   #   "home.luk4s.cz",
   # ]
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+
+  config.action_mailer.default_url_options = { host: "home.luk4s.cz" }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = Rails.application.credentials[:smtp_settings]
+
+  config.active_job.queue_adapter = :sidekiq
   # Use Redis for cache storage in production
   config.cache_store = :redis_cache_store, {
     url: ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" },

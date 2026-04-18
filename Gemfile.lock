@@ -164,6 +164,7 @@ GEM
     ffi (1.17.4-arm64-darwin)
     ffi (1.17.4-x86-linux-gnu)
     ffi (1.17.4-x86_64-linux-gnu)
+    ffi (1.17.4-x86_64-linux-musl)
     fugit (1.12.1)
       et-orbi (~> 1.4)
       raabro (~> 1.4)
@@ -231,6 +232,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.19.2-x86_64-linux-gnu)
       racc (~> 1.4)
+    nokogiri (1.19.2-x86_64-linux-musl)
+      racc (~> 1.4)
     orm_adapter (0.5.0)
     parallel (2.0.1)
     parser (3.3.11.1)
@@ -239,6 +242,7 @@ GEM
     pg (1.6.3-aarch64-linux)
     pg (1.6.3-arm64-darwin)
     pg (1.6.3-x86_64-linux)
+    pg (1.6.3-x86_64-linux-musl)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -434,6 +438,7 @@ PLATFORMS
   arm64-darwin-24
   arm64-darwin-25
   linux
+  x86_64-linux-musl
 
 DEPENDENCIES
   active_record-pgcrypto (~> 0.2)
