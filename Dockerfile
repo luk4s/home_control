@@ -1,5 +1,5 @@
 # Base image
-FROM ruby:4.0-alpine AS base
+FROM ruby:4.0.2-alpine AS base
 LABEL org.opencontainers.image.authors="pokorny@luk4s.cz"
 # Setup environment variables that will be available to the instance
 ENV RAILS_ROOT=/app

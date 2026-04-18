@@ -23,8 +23,10 @@ class AtreaDuplex
                    duplex_auth_token: duplex_tokens[:sid],
                    duplex_user_ctrl: user_ctrl,
                  })
-  rescue AtreaControl::Error
+  rescue AtreaControl::Error => e
+    Rails.logger.error { "Login failed: #{e.class}: #{e.message}" }
     home.status_failed!
+    raise
   end
 
   def data
