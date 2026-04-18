@@ -7,7 +7,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # While tests run files are not watched, reloading is not necessary.
-  config.enable_reloading = false
+  config.enable_reloading = true # Spring
 
   # Eager loading loads your entire application. When running a single test locally,
   # this is usually not necessary, and can slow down your test suite. However, it's
@@ -22,8 +22,8 @@ Rails.application.configure do
   config.consider_all_requests_local = true
   config.cache_store = :null_store
 
-  # Raise exceptions instead of rendering exception templates to ensure test failures are visible.
-  config.action_dispatch.show_exceptions = :none
+  # Render exception templates for rescuable exceptions and raise for other exceptions.
+  config.action_dispatch.show_exceptions = :rescuable
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
@@ -50,5 +50,4 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
-  config.active_job.queue_adapter = :test
 end
