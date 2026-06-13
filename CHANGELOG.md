@@ -2,6 +2,14 @@
 
 This application uses release dates from the `version` file instead of semantic versions.
 
+## 2026-06-13
+
+- Applied security updates to dependencies.
+- Updated Sentry to 6.6.2.
+- Updated redis-client to 0.30.0.
+- Updated RuboCop Rails and RSpec extensions.
+- Updated json, msgpack, and net-imap.
+
 ## 2026-06-05
 
 - Updated Ruby to 4.0.5.
