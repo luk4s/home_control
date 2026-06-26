@@ -13,7 +13,7 @@
   },
   "version": "0.1.0",
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^7.2.0",
+    "@fortawesome/fontawesome-free": "^7.3.0",
     "vite": "^8.1.0",
     "vite-plugin-ruby": "^5.2.0"
   },
