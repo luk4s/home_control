@@ -11,7 +11,7 @@ class AtreaDuplex
   end
 
   def login_and_update_tokens!
-    remove_instance_variable :@control
+    @control = nil
     Rails.logger.debug "New login in progress..."
     home.status_login_in_progress!
     duplex_tokens = AtreaControl::Duplex::Login.user_tokens login: home.atrea_login, password: home.atrea_password
