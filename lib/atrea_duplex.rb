@@ -7,7 +7,10 @@ class AtreaDuplex
 
   def control
     login_and_update_tokens! if home.duplex_auth_token.blank? || home.input_temperature_source.blank?
-    @control ||= AtreaControl::Duplex::Unit.new user_id: home.duplex_user_id, unit_id: home.duplex_unit_id, sid: home.duplex_auth_token, user_ctrl: home
+    @control ||= AtreaControl::Duplex::Unit.new(
+      user_id: home.duplex_user_id, unit_id: home.duplex_unit_id, sid: home.duplex_auth_token, user_ctrl: home,
+      time_zone: ENV.fetch("ATREA_TIME_ZONE", "Europe/Prague")
+    )
   end
 
   def login_and_update_tokens!

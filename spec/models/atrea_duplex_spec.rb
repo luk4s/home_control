@@ -1,3 +1,5 @@
+require "faraday"
+
 RSpec.describe AtreaDuplex do
   let(:home) { create(:my_home, duplex_auth_token: "old-token", duplex_user_ctrl: metadata) }
   let(:metadata) { {} }
@@ -43,7 +45,7 @@ RSpec.describe AtreaDuplex do
   it "rebuilds previously cached Unit with refreshed credentials" do
     old_unit = cache_old_unit
     stub_login
-    expect(AtreaControl::Duplex::Unit).to receive(:new).with(**tokens, user_ctrl: home).and_call_original
+    expect(AtreaControl::Duplex::Unit).to receive(:new).with(**tokens, user_ctrl: home, time_zone: ENV.fetch("ATREA_TIME_ZONE", "Europe/Prague")).and_call_original
     expect(duplex.control).not_to equal(old_unit)
   end
 
@@ -76,6 +78,33 @@ RSpec.describe AtreaDuplex do
       stub_login
       duplex.control
       expect(home.reload.duplex_auth_token).to eq("new-token")
+    end
+  end
+
+  describe "#data session recovery" do
+    let(:metadata) { { input_temperature_source: "rd5_standard" } }
+    let(:fresh_unit) { instance_double(AtreaControl::Duplex::Unit, values: { current_power: 88.0 }) }
+
+    before do
+      allow(duplex.control).to receive(:values).and_raise(AtreaControl::SessionExpired)
+      stub_login
+      allow(AtreaControl::Duplex::Unit).to receive(:new).with(**tokens, user_ctrl: home, time_zone: ENV.fetch("ATREA_TIME_ZONE", "Europe/Prague")).and_return(fresh_unit)
+    end
+
+    [AtreaControl::SessionExpired, Faraday::ForbiddenError].each do |error_class|
+      it "logs in again and reads with fresh credentials after #{error_class}" do
+        allow(duplex.control).to receive(:values).and_raise(error_class)
+        expect(AtreaControl::Duplex::Login).to receive(:user_tokens).once
+
+        expect(duplex.data).to eq(current_power: 88.0)
+      end
+    end
+
+    it "propagates another expiry after one re-login instead of looping" do
+      allow(fresh_unit).to receive(:values).and_raise(AtreaControl::SessionExpired)
+      expect(AtreaControl::Duplex::Login).to receive(:user_tokens).once
+
+      expect { duplex.data }.to raise_error(AtreaControl::SessionExpired)
     end
   end
 
