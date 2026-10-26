@@ -520,7 +520,15 @@ vite-plugin-rails@^0.6.0:
     vite-plugin-ruby "^5.0.0"
     vite-plugin-stimulus-hmr "^3.0.0"
 
-vite-plugin-ruby@5.2.6, vite-plugin-ruby@^5.0.0, vite-plugin-ruby@^5.2.6:
+vite-plugin-ruby@5.2.1, vite-plugin-ruby@^5.0.0:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-ruby/-/vite-plugin-ruby-5.2.1.tgz#8422e2a69cd923b5d63f510744f0503a622bf4c6"
+  integrity sha512-wI3F/Yr4e4mEwiMff/cvNwGu8nZok5wrwUjHxO8we+h3y9+qCluO3Y5dzvz6vHJDBya9fKXkltoMwoJhaB2SRg==
+  dependencies:
+    obug "^2.0"
+    tinyglobby "^0.2.12"
+
+vite-plugin-ruby@^5.2.5:
   version "5.2.6"
   resolved "https://registry.yarnpkg.com/vite-plugin-ruby/-/vite-plugin-ruby-5.2.6.tgz#1769c60ba7732e04adf8ffcdb4ff9949e27b4efa"
   integrity sha512-bGIPoUWHwH4Ym5o5PacFUBaCGaftcUOYptdyPkyIvLfefdu0HbqIuT5aKPrFAp2p8wUMHmC4SqXF8yxtZuk6Tg==
@@ -536,7 +544,7 @@ vite-plugin-stimulus-hmr@^3.0.0:
     debug "^4.3"
     stimulus-vite-helpers "^3.0.0"
 
-vite@^8.3.5:
+vite@^8.0.0:
   version "8.3.5"
   resolved "https://registry.yarnpkg.com/vite/-/vite-8.3.5.tgz#9614f66026cb92fe486cb9d3c90780b2a69fc85d"
   integrity sha512-z1YpjieJ9g0ebTmQpLBv/oq9E3F9EIlOe+7LahW8SrE3LTiG3udBRUXQOlYXP9b+IC2q2phHeVxj9xGlw34OEQ==

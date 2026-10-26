@@ -4,4 +4,4 @@ inherit_gem:
   symphonia_spec: .rubocop.yml
 
 AllCops:
-  TargetRubyVersion: 3.2
+  TargetRubyVersion: 4.0

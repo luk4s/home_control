@@ -56,7 +56,7 @@ export default class extends Controller {
     }
 
     inputTemperatureValueChanged() {
-        this.inputTemperatureTarget.innerHTML = `${this.inputTemperatureValue}&#8451;`
+        this.inputTemperatureTarget.innerHTML = Number.isFinite(this.inputTemperatureValue) ? `${this.inputTemperatureValue}&#8451;` : "—"
     }
 
     preheatingValueChanged() {

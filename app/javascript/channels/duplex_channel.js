@@ -12,7 +12,7 @@ consumer.subscriptions.create("DuplexChannel", Object.assign(base, {
       controller.dataset.dashboardCurrentPowerValue = data["current_power"]
       controller.dataset.dashboardOutdoorTemperatureValue = data["outdoor_temperature"]
       controller.dataset.dashboardPreheatTemperatureValue = data["preheat_temperature"]
-      controller.dataset.dashboardInputTemperatureValue = data["input_temperature"]
+      controller.dataset.dashboardInputTemperatureValue = data["input_temperature"] ?? "NaN"
       controller.dataset.dashboardPreheatingValue = data["preheating"]
     }
   }

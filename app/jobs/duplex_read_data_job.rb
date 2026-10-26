@@ -23,7 +23,9 @@ class DuplexReadDataJob < ApplicationJob
       precision: InfluxDB2::WritePrecision::SECOND,
     }.reverse_merge(influxdb))
     write_api = client.create_write_api
-    write_api.write(data: "#{home.influxdb_id},current_mode=#{data[:current_mode]} power=#{data[:current_power]},outdoor_temperature=#{data[:outdoor_temperature]},input_temperature=#{data[:input_temperature]}")
+    fields = { power: data[:current_power], outdoor_temperature: data[:outdoor_temperature] }
+    fields[:input_temperature] = data[:input_temperature] unless data[:input_temperature].nil?
+    write_api.write(data: "#{home.influxdb_id},current_mode=#{data[:current_mode]} #{fields.map { |key, value| "#{key}=#{value}" }.join(',')}")
   end
 
 end

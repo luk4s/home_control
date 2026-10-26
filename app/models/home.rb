@@ -11,7 +11,7 @@ class Home < ApplicationRecord
   belongs_to :user
 
   store_accessor :duplex_auth_options, :user_id, :unit_id, :auth_token, prefix: :duplex
-  store_accessor :duplex_user_ctrl, :name, :user_texts, :modes, :user_modes, :sensors
+  store_accessor :duplex_user_ctrl, :name, :user_texts, :modes, :user_modes, :sensors, :input_temperature_source
 
   store_accessor :influxdb_options, :url, :token, :org, :bucket, prefix: :influxdb
 

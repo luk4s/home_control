@@ -2,6 +2,15 @@
 
 This application uses release dates from the `version` file instead of semantic versions.
 
+## Unreleased
+
+- Updated Ruby to 4.0.7 and RuboCop's target Ruby version to 4.0.
+- Pinned CI jobs to Ubuntu 26.04 runners.
+- Integrate `atrea_control` 4.x and persist inlet-temperature source metadata with
+  cached configuration. Refresh older caches and rebuild the unit after login.
+- Display unavailable inlet temperature as an em dash and omit it from InfluxDB;
+  retain valid zero-degree readings. Sensor-selection rules remain in the gem.
+
 ## 2026-06-13
 
 - Applied security updates to dependencies.
