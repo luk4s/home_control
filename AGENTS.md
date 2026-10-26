@@ -1,7 +1,7 @@
 # AGENTS.md
 
 ## Stack
-- Rails 8.1 app on Ruby 4.0.5; Dockerfile uses `ruby:4.0.5-alpine`.
+- Rails 8.1 app on Ruby 4.0.7; Dockerfile uses `ruby:4.0.7-alpine`.
 - Frontend assets use Vite Ruby, Yarn 1.22.22, Stimulus, Turbo, and Rails UJS.
 - PostgreSQL is required for dev/test; Redis is required for Sidekiq and production ActionCable.
 
@@ -23,6 +23,8 @@
 ## Architecture
 - Root route is `HomesController#show`; users authenticate through Devise.
 - `Home#duplex` wraps `lib/atrea_duplex.rb`, which talks to `atrea_control` and persists auth tokens.
+- `duplex_user_ctrl` must retain the gem's `input_temperature_source`; missing
+  metadata triggers configuration refresh. Keep sensor selection in the gem.
 - `DuplexReadDataJob` reads Atrea data, broadcasts via `DuplexChannel`, and optionally writes InfluxDB line protocol.
 - Sidekiq cron is registered in `config/initializers/sidekiq.rb` every minute as `DuplexCronJob`; initializer destroys/recreates cron jobs on server boot.
 - Vite source dir is `app/javascript`; alias `@` maps to `/app/javascript`.

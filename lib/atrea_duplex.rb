@@ -6,11 +6,12 @@ class AtreaDuplex
   end
 
   def control
-    login_and_update_tokens! unless home.duplex_auth_token
+    login_and_update_tokens! if home.duplex_auth_token.blank? || home.input_temperature_source.blank?
     @control ||= AtreaControl::Duplex::Unit.new user_id: home.duplex_user_id, unit_id: home.duplex_unit_id, sid: home.duplex_auth_token, user_ctrl: home
   end
 
   def login_and_update_tokens!
+    remove_instance_variable :@control
     Rails.logger.debug "New login in progress..."
     home.status_login_in_progress!
     duplex_tokens = AtreaControl::Duplex::Login.user_tokens login: home.atrea_login, password: home.atrea_password

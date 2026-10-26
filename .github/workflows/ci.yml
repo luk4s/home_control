@@ -2,7 +2,7 @@ name: ci
 on: [ push ]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     outputs:
       APP_VERSION: ${{ steps.build-variables.outputs.APP_VERSION }}
       IMAGE_REGISTRY: ${{ steps.build-variables.outputs.IMAGE_REGISTRY }}
@@ -34,7 +34,7 @@ jobs:
           cache-from: type=registry,ref=${{ steps.build-variables.outputs.IMAGE_REGISTRY }}:build-cache
           tags: ${{ steps.build-variables.outputs.IMAGE_REGISTRY }}:${{ steps.build-variables.outputs.IMAGE_TAG }}
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: "build"
     env:
       DATABASE_HOST: localhost
@@ -73,7 +73,7 @@ jobs:
       - run: docker run --network host --rm --env-file .env.test --entrypoint '' "${{ needs.build.outputs.IMAGE_REGISTRY }}:${{ needs.build.outputs.IMAGE_TAG }}" bundle exec rails db:test:prepare
       - run: docker run --network host --rm --env-file .env.test --entrypoint '' "${{ needs.build.outputs.IMAGE_REGISTRY }}:${{ needs.build.outputs.IMAGE_TAG }}" bundle exec rspec
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs:  [ build, test ]
     if: success() && github.ref == 'refs/heads/master'
     steps:
