@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem "rails", "~> 8.1"
 gem "rails-i18n", "~> 8.1"
 
-gem "pg", "~> 1.6.3"
+gem "pg", "~> 1.7.0"
 # Use Puma as the app server
 gem "puma", "~> 8.0"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -27,7 +27,7 @@ end
 
 group :development do
   gem "listen", "~> 3.3"
-  gem "rack-mini-profiler", "~> 4.0"
+  gem "rack-mini-profiler", "~> 5.0"
 end
 
 gem "bootstrap_form", "~> 5.4"
