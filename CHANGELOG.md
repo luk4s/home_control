@@ -4,6 +4,8 @@ This application uses release dates from the `version` file instead of semantic 
 
 ## Unreleased
 
+## 2026-10-26
+
 - Updated Ruby to 4.0.7 and RuboCop's target Ruby version to 4.0.
 - Pinned CI jobs to Ubuntu 26.04 runners.
 - Integrate `atrea_control` 4.x and persist inlet-temperature source metadata with
