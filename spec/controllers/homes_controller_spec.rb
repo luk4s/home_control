@@ -23,6 +23,38 @@ RSpec.describe HomesController, type: :controller do
         expect(response).to have_http_status :ok
       end
     end
+
+    context "with an expired Atrea session" do
+      login_user
+
+      let(:tokens) { { user_id: "new-user", unit_id: "new-unit", sid: "new-token" } }
+      let(:old_unit) { instance_double(AtreaControl::Duplex::Unit) }
+      let(:fresh_unit) { instance_double(AtreaControl::Duplex::Unit) }
+
+      before do
+        FactoryBot.create(:my_home, user: controller.current_user, duplex_auth_token: "old-token", duplex_user_ctrl: { input_temperature_source: "rd5_standard" })
+        allow(AtreaControl::Duplex::Unit).to receive(:new).and_return(old_unit, fresh_unit)
+        allow(old_unit).to receive(:values).and_raise(AtreaControl::SessionExpired)
+        allow(AtreaControl::Duplex::Login).to receive(:user_tokens).and_return(tokens)
+        allow(AtreaControl::Duplex::UserCtrl).to receive(:data).and_return({ input_temperature_source: "rd5_standard" })
+      end
+
+      it "logs in again and returns readings with the renewed session" do
+        allow(fresh_unit).to receive(:values).and_return({ current_power: 88.0 })
+        expect(AtreaControl::Duplex::Login).to receive(:user_tokens).once
+
+        get :show, format: :json
+
+        expect([response.status, response.parsed_body]).to match([200, a_hash_including("current_power" => 88.0, "sid" => "new-token")])
+      end
+
+      it "returns reconnecting state when the renewed session is not ready yet" do
+        allow(fresh_unit).to receive(:values).and_raise(AtreaControl::SessionExpired)
+        expect { get :show, format: :json }.to have_enqueued_job(DuplexReadDataJob)
+
+        expect([response.status, response.parsed_body, response.headers["Retry-After"]]).to eq([202, { "login_in_progress" => true }, "5"])
+      end
+    end
   end
 
   describe "#update" do
