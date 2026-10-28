@@ -9,7 +9,7 @@ class HomesController < ApplicationController
     DuplexReadDataJob.perform_later(home)
     respond_to do |format|
       format.html
-      format.json { render json: home.duplex }
+      format.json { render_duplex }
     end
   end
 
@@ -62,7 +62,7 @@ class HomesController < ApplicationController
     DuplexReadDataJob.set(wait: 10.seconds).perform_later(home)
     respond_to do |format|
       format.html { render :edit }
-      format.json { render json: home.duplex }
+      format.json { render_duplex }
     end
   end
 
@@ -75,7 +75,7 @@ class HomesController < ApplicationController
     DuplexReadDataJob.set(wait: 10.seconds).perform_later(home)
     respond_to do |format|
       format.html { render :show }
-      format.json { render json: home.duplex }
+      format.json { render_duplex }
     end
   end
 
@@ -85,6 +85,14 @@ class HomesController < ApplicationController
   end
 
   private
+
+  def render_duplex
+    render json: home.duplex
+  rescue AtreaControl::SessionExpired
+    # Atrea can still return an expired snapshot after re-login. The queued read job retries it.
+    response.set_header("Retry-After", "5")
+    render json: { login_in_progress: true }, status: :accepted
+  end
 
   def entity_attributes
     duplex_attributes = %i[atrea_login atrea_password login_in_progress]

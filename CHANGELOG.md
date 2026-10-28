@@ -4,6 +4,13 @@ This application uses release dates from the `version` file instead of semantic 
 
 ## Unreleased
 
+## 2026-10-28
+
+- Return HTTP 202 with a reconnecting state and `Retry-After` header when Atrea
+  readings remain expired after automatic re-login, instead of HTTP 500.
+  Background read jobs continue retrying while the session recovers.
+- Add regression coverage for successful re-login and repeated session expiry.
+
 ## 2026-10-26
 
 - Updated Ruby to 4.0.7 and RuboCop's target Ruby version to 4.0.
