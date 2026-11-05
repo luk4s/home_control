@@ -4,6 +4,13 @@ This application uses release dates from the `version` file instead of semantic 
 
 ## Unreleased
 
+## 2026-11-05
+
+- Updated Ruby to 4.0.9 in `.ruby-version` and the Docker base image.
+- Updated repository stack documentation and release date.
+- Attempted `bundle outdated` to refresh dependencies, but the private gem source
+  `gems.luk4s.cz` was unreachable in this environment.
+
 ## 2026-10-28
 
 - Return HTTP 202 with a reconnecting state and `Retry-After` header when Atrea
