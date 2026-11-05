@@ -1,7 +1,7 @@
 # AGENTS.md
 
 ## Stack
-- Rails 8.1 app on Ruby 4.0.7; Dockerfile uses `ruby:4.0.7-alpine`.
+- Rails 8.1 app on Ruby 4.0.9; Dockerfile uses `ruby:4.0.9-alpine`.
 - Frontend assets use Vite Ruby, Yarn 1.22.22, Stimulus, Turbo, and Rails UJS.
 - PostgreSQL is required for dev/test; Redis is required for Sidekiq and production ActionCable.
 
