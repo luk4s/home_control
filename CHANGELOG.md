@@ -4,6 +4,10 @@ This application uses release dates from the `version` file instead of semantic 
 
 ## Unreleased
 
+## 2026-11-06
+
+- Fix Timeout::Error on login
+
 ## 2026-11-05
 
 - Updated Ruby to 4.0.9 in `.ruby-version` and the Docker base image.
