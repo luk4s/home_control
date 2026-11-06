@@ -55,6 +55,23 @@ RSpec.describe HomesController, type: :controller do
         expect([response.status, response.parsed_body, response.headers["Retry-After"]]).to eq([202, { "login_in_progress" => true }, "5"])
       end
     end
+
+    context "when Atrea portal login times out" do
+      login_user
+
+      before do
+        FactoryBot.create :my_home, user: controller.current_user
+        allow_any_instance_of(AtreaDuplex).to receive(:as_json).and_raise(
+          AtreaControl::UnitConnectionTimeout.new("Portal login deadline exceeded")
+        )
+      end
+
+      it "returns reconnecting state instead of raising a 500" do
+        get :show, format: :json
+
+        expect([response.status, response.parsed_body, response.headers["Retry-After"]]).to eq([202, { "login_in_progress" => true }, "5"])
+      end
+    end
   end
 
   describe "#update" do

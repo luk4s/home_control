@@ -1,4 +1,8 @@
+require "timeout"
+
 class HomesController < ApplicationController
+  ATREA_READ_TIMEOUT_SECONDS = ENV.fetch("ATREA_READ_TIMEOUT_SECONDS", "15").to_i
+
   before_action :authenticate_user!
 
   skip_forgery_protection if: -> { request.format.json? }, only: %i[scenario]
@@ -87,9 +91,12 @@ class HomesController < ApplicationController
   private
 
   def render_duplex
-    render json: home.duplex
-  rescue AtreaControl::SessionExpired
-    # Atrea can still return an expired snapshot after re-login. The queued read job retries it.
+    payload = Timeout.timeout(ATREA_READ_TIMEOUT_SECONDS) { home.duplex.as_json }
+    render json: payload
+  rescue Timeout::Error, AtreaControl::SessionExpired, AtreaControl::UnitConnectionTimeout => e
+    Rails.logger.warn { "Duplex read delayed: #{e.class}: #{e.message}" }
+    # Atrea can still return an expired snapshot after re-login, or the portal can timeout.
+    # The queued read job retries it.
     response.set_header("Retry-After", "5")
     render json: { login_in_progress: true }, status: :accepted
   end
